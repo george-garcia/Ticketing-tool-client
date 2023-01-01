@@ -1,25 +1,57 @@
-import logo from './logo.svg';
 import './App.css';
+import {useFetchUsersQuery, useFetchOneUserQuery} from "./store";
+import {useRegisterUserQuery} from "./store";
+import { createApi } from '@reduxjs/toolkit/query/react'
+import {usersApi} from "./store/apis/usersApi";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+    // const newUser = {
+    //     firstName: "react",
+    //     lastName: "test",
+    //     email: "react@gmail.com",
+    //     password: "secret"
+    // };
+    const {data, error, isLoading} = useFetchUsersQuery();
+    // const {data, error, isLoading} = useRegisterUserQuery(JSON.stringify(newUser));
+    // const info = useFetchOneUserQuery('63aed8993751e5b44ae8ada2');
+
+    // if(data)
+    //     localStorage.set('token', 'Bearer ' + data.token);
+
+
+    // localStorage.setItem('token', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2M2IwZmMyZjE1OWZmNDI1M2M3NzA3MTkiLCJmaXJzdE5hbWUiOiJ0ZXN0IiwiaWF0IjoxNjcyNTY3OTAyLCJleHAiOjE2NzUxNTk5MDJ9.zv4x13rUPxPf5u1ZSBYBvtUUE9EwKBeG20cMvDg7tNE');
+
+    // const useQueryStateResult = usersApi.endpoints.fetchUsers.useQueryState();
+    // const query = usersApi.endpoints.fetchUsers.useQueryState();
+    // console.log(query);
+    // console.log(info);
+
+    let content;
+    if (isLoading) {
+        content = <div>Loading...</div>
+    } else if (error) {
+        content = <div>Error</div>
+    } else {
+        const {users} = data;
+        content = users.map(user => {
+            return (
+                <div>
+                    {user.firstName}
+                    {user.lastName}
+                    {user.email}
+                </div>
+            );
+        })
+    }
+
+
+    return (
+        <div>
+            App
+            {content}
+        </div>
+    );
 }
 
 export default App;
