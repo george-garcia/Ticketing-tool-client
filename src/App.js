@@ -1,20 +1,22 @@
 import './App.css';
 import NavPage from "./pages/NavPage";
 import { BrowserRouter, Routes, Route} from "react-router-dom";
-import LoginPage from "./pages/LoginPage";
-import RegisterPage from "./pages/RegisterPage";
+import AuthPage from "./Views/AuthView/AuthPage";
+import RegisterPage from "./Views/AuthView/RegisterPage";
 import {useFetchUsersQuery, useFetchOneUserQuery} from "./store";
 import {useRegisterUserQuery} from "./store";
 import { createApi } from '@reduxjs/toolkit/query/react'
 import {usersApi} from "./store/apis/usersApi";
+import LoginHook from "./Views/AuthView/LoginHook";
 
 function App() {
     return (
         <div>
             <BrowserRouter>
                     <Routes>
-                        <Route path="/" element={<LoginPage/>}/>
-                        <Route path="/register" element={<RegisterPage/>}/>
+                        <Route path="/" element={<AuthPage/>}/>
+                        <Route path="/dashboard" element={<NavPage/>}/>
+                        <Route path="/login" element={<LoginHook/>}/>
                         {/*<Route path="/profile/:userId" element={<ProfilePage/>}/>*/}
                     </Routes>
             </BrowserRouter>

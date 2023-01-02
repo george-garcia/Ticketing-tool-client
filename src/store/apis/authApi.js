@@ -26,10 +26,10 @@ const authApi = createApi({
                     }
                 }
             }),
-            loginUser: builder.query({
+            loginUser: builder.mutation({
                 query(json) {
                     return {
-                        url: '/',
+                        url: '/login',
                         method: 'POST',
                         body: json,
                     }
@@ -39,5 +39,5 @@ const authApi = createApi({
     }
 });
 
-export const {useRegisterUserQuery, useLoginUserQuery} = authApi;
+export const {useRegisterUserQuery, useLoginUserMutation} = authApi;
 export {authApi};
