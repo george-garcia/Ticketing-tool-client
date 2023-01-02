@@ -1,0 +1,80 @@
+.auth-container {
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    width: 100rem;
+    height: 25rem;
+
+    display: flex;
+}
+
+.auth-selector {
+    background-color: var(--text-light-100);
+    width: 20rem;
+    /*padding: 0 5rem;*/
+}
+
+.auth-selector--login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50%;
+}
+
+.auth-separator {
+    display: flex;
+    justify-content: space-between;
+}
+
+.register--firstname {
+    width: 49%;
+
+}
+
+.register--lastname {
+    width: 49%;
+}
+
+.auth-selector--register {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50%;
+}
+
+.auth-selector--active {
+    background-color: red;
+}
+
+.auth-form {
+    background-color: var(--primary-color-900);
+    color: var(--primary-color-400);
+    font-size: 2.4rem;
+    padding: 3rem;
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.auth-header {
+    align-self: center;
+    margin-bottom: 3rem;
+}
+
+.login-email {
+    display: block;
+    margin-bottom: 1rem;
+}
+
+.login-password {
+    display: block;
+    margin-bottom: 1.5rem;
+
+}
+
+.btn-login {
+    display: inline-block;
+}
