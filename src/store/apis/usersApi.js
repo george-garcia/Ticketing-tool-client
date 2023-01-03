@@ -22,7 +22,7 @@ const usersApi = createApi({
                 query(arg) {
                     return {
                         url: `/${arg.userId}`,
-                        method: 'POST',
+                        method: 'PATCH',
                         body: arg.body
                     }
                 }

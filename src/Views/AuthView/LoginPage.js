@@ -1,17 +1,19 @@
 import {useLoginUserMutation} from "../../store";
 import {useState, useEffect} from "react";
+import {Navigate, useLocation} from "react-router-dom";
 import './AuthPage.css';
-import LoginHook from "./LoginHook";
 
 const LoginPage = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errorMsg, setErrorMsg] = useState('');
     const [login, {isLoading, isSuccess}] =  useLoginUserMutation();
+    const location = useLocation();
+    const [loginSuccess, setLoginSuccess] = useState(false);
 
     useEffect(() => {
         setErrorMsg("");
-    },[email, password])
+    },[email, password]);
 
 
     //This is using the AuthPage.css file
@@ -23,12 +25,14 @@ const LoginPage = () => {
         e.preventDefault();
         try {
             const userData = await login({email, password}).unwrap();
+
+            if(userData?.token){
+                localStorage.setItem('token', `Bearer ${userData.token}`);
+                setLoginSuccess(true);
+                }
         } catch (e) {
             setErrorMsg(e.data.msg);
         }
-        //if not userdata we can display a login failed message
-
-        //if userdata success we route to dashboard
     }
 
     return (
@@ -42,6 +46,7 @@ const LoginPage = () => {
             <button className="btn-login">Login</button>
             {errorMsg ? <h6>{errorMsg}</h6> : null}
             {!errorMsg && isSuccess ? <h1>Loading dashboard...</h1> : null}
+            {loginSuccess && <Navigate to={"/dashboard"} state={{from: location}}/>}
         </form>
     );
 }

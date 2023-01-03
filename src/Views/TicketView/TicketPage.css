@@ -1,0 +1,22 @@
+.section-ticketPage {
+    color: white;
+}
+
+.ticketPage-top {
+    padding: 2rem 2rem;
+    height: 30rem;
+    gap: 2rem;
+}
+
+.ticketPage-top--styles {
+    border-radius: 10px;
+    padding: 2rem 2rem;
+    background-color: var(--dark-color-900);
+}
+
+.ticket-user {
+
+}
+
+.ticket-assigned {
+}
