@@ -2,7 +2,7 @@
     font-size: 1.8rem;
 }
 
-.mar-2 {
+.table-headers {
     /*display: block;*/
     /*margin-right: 3rem;*/
     font-size: 2.6rem;
@@ -10,7 +10,7 @@
     /*text-align: center;*/
     /*background-color: red;*/
     /*margin-left: 2rem;*/
-    justify-content: space-between;
+    /*justify-content: space-between;*/
     padding-bottom: 2rem;
     /*display: inline-block;*/
 }
@@ -24,6 +24,7 @@
 .dash-heading {
     font-size: 3.6rem;
     margin-bottom: 1rem;
+
 }
 
 .dash-subheading {
@@ -34,19 +35,13 @@
     margin-bottom: 5rem;
 }
 
-.dash-table {
+.table {
     margin-top: 2rem;
     background-color: #1E2027FF;
     padding: 1.5rem 0;
     color: #ddd;
     /*color: black;*/
     border-radius: 5px;
-}
-
-.dash-head{
-    margin-bottom: 2rem;
-    /*background-color: red;*/
-    /*display: inline-block;*/
 }
 
 .dash-row--data:hover,

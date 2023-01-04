@@ -23,12 +23,12 @@ function Table({data, config, keyFn}) {
     )
 
     const renderedHeaders = config.map((column) => {
-        return <th className="mar-2" key={column.label}>{column.label}</th>
+        return <th className="table-headers" key={column.label}>{column.label}</th>
     });
 
     return (
-        <table className="dash-table">
-            <thead className="dash-head">
+        <table className="table">
+            <thead>
             <tr className="">
                 {renderedHeaders}
             </tr>
