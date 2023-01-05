@@ -23,7 +23,6 @@ const DashboardPage = () => {
     },];
 
     if (data) {
-
         renderedTable = <Table data={data.tickets} config={config}/>;
     }
 
@@ -32,7 +31,7 @@ const DashboardPage = () => {
         <div className="section-dashboard">
             <h2 className="dash-heading">Dashboard Page</h2>
             <p className="dash-subheading">View all tickets</p>
-            {renderedTable || null}
+            {renderedTable || <h1>Loading...</h1>}
         </div>
     );
 }

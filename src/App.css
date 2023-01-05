@@ -1,18 +1,4 @@
-* {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-}
 
-body {
-    font-family: 'Inter', sans-serif;
-    font-weight: 400;
-    line-height: 1;
-}
-
-html {
-    font-size: 62.5%;
-}
 
 .container {
     max-width: 130rem;
@@ -30,7 +16,7 @@ html {
 
     --secondary-color-500: #D946EF;
 
-    --dark-color-900: rgb(30,32,39);
+    --dark-color-900: rgb(30, 32, 39);
 
     --text-light-100: #eee;
 
