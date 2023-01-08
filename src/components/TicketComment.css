@@ -1,0 +1,25 @@
+.comment-detail {
+    font-family: inherit;
+    border-bottom: solid 2px var(--primary-color-400);
+    font-size: 1.8rem;
+    padding-bottom: 1rem;
+    line-height: 1.5;
+
+}
+
+.comment-heading {
+    margin-bottom: 1rem;
+    color: #888;
+    border-bottom: solid 2px var(--primary-color-400);
+    padding-bottom: 5px;
+}
+
+.comment-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.comment-title--container {
+    display: flex;
+    gap: 2rem;
+}

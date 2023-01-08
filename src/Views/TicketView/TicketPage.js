@@ -1,15 +1,22 @@
 import {useParams} from "react-router-dom";
-import {useFetchOneTicketQuery, useFetchUsersQuery} from "../../store";
+import {
+    useFetchOneTicketQuery,
+    useFetchUsersQuery,
+    useAddNewCommentMutation,
+    useUpdateTicketMutation
+} from "../../store";
 import './TicketPage.css';
 import {useState, useEffect} from "react";
-import Dropdown from "../../components/Dropdown";
 import Panel from "../../components/Panel";
 import TicketComment from "../../components/TicketComment";
+import PropertiesPage from "./PropertiesPage";
 
 const TicketPage = () => {
         const {ticketId} = useParams();
         const {data: ticketData, isLoading: ticketIsLoading, currentData} = useFetchOneTicketQuery(ticketId);
         const {data: userData, isLoading: userDataIsLoading} = useFetchUsersQuery();
+        const [updateComment] = useAddNewCommentMutation();
+        const [updateTicket] = useUpdateTicketMutation();
         const [ticket, setTicket] = useState({});
         const [ticketCreator, setTicketCreator] = useState({});
         const [ticketAssignedWorker, setTicketAssignedWorker] = useState({});
@@ -18,6 +25,7 @@ const TicketPage = () => {
         const [description, setDescription] = useState('');
         const [comments, setComments] = useState([]);
         const [newComment, setNewComment] = useState('');
+
 
         useEffect(() => {
             //load ticket data
@@ -58,99 +66,72 @@ const TicketPage = () => {
             }
         },);
 
-        useEffect(() => {
-
-            if (ticketAssignedWorker?.firstName) {
-                const current = {
-                    name: `${ticketAssignedWorker.firstName} ${ticketAssignedWorker.lastName}`,
-                    id: ticketAssignedWorker._id,
-                };
-
-                setAssignedWorkerSelection(current);
-            }
-        }, [ticketAssignedWorker]);
-
-        //usersData is an array, iterate through this array and return an object { user: name, id: mongoID }
-
-        const handleSelectionState = (option) => {
-            setAssignedWorkerSelection(option);
-        }
-
-        const renderAssignedUserDropdown = () => {
-            console.log(userData.users);
-            const usersArr = userData.users.map(user => {
-                return {
-                    name: `${user.firstName} ${user.lastName}`,
-                    id: user._id,
-                }
-            });
-
-
-            return <Dropdown options={usersArr} current={assignedWorkerSelection}
-                             handleSelectionState={handleSelectionState}/>
-        };
-
-//display user info on screen
-        const renderCreatorData = () => {
-            return (
-                <>
-                    <p>Name: {ticketCreator.firstName} {ticketCreator.lastName}</p>
-                    <p>User ID: {ticketCreator._id}</p>
-                    <p>Email: {ticketCreator.email}</p>
-                    <p>Contact: </p>
-                </>
-            );
-        };
-
         let renderComments = 'loading...';
-        if(comments) {
+        if (comments) {
             renderComments = comments.map(comment => {
-                return <TicketComment key={comment} comment={comment}/>
+                return <TicketComment key={comment._id} comment={comment}/>
             });
         }
 
-        console.log(renderComments);
-
-        //submit button, if assignedSelection changes, call update ticket with new assignedworker
+        function addNewComment() {
+            if (newComment) {
+                //this should create an object comment with comment.ticketId and comment.body values
+                //then call the mutation with this object
+                const comment = {
+                    ticketId: ticket._id,
+                    body: {
+                        comments: newComment
+                    }
+                };
+                updateComment(comment);
+                setNewComment('');
+            }
+        }
 
         return (
             <div className="section-ticketPage">
-                <div className="ticketPage-top grid grid-2-cols">
-                    <Panel
-                        children={<div className="ticket-user ticketPage-top--styles">
-                            {renderCreatorData()}
-                        </div>}/>
-                    <div className="ticket-assigned ticketPage-top--styles">
+
+                <div className="ticketPage-container">
+                    <div className="ticketPage-left--container">
+                        <Panel className={"ticket-description-section"} children={
+                            <>
+                                <div className="ticket-title-section">
+                                    <input onChange={(e) => setTitle(e.target.value)} value={title || ""}
+                                           className="ticket-title--input"></input>
+                                    <div className="ticket-container--time">
+                                        <p><span>Sheen Adrian</span> reported an issue</p>
+                                        <p>4 hours ago</p>
+                                    </div>
+                                </div>
+
+                                <textarea onChange={(e) => setDescription(e.target.value)} value={description}
+                                          className="ticket-description--input"></textarea>
+                            </>
+                        }/>
+
+                        {renderComments}
+
+                        <Panel className={"ticket-comments-section"} children={
+                            <>
+                                <div className="newComment-container">
+                                    <h4 className="ticket-comments">Add new comment</h4>
+                                    <button onClick={addNewComment}>Save new comment</button>
+                                </div>
+                                <textarea onChange={(e) => setNewComment(e.target.value)} value={newComment}
+                                          className="ticket-comments--input"></textarea>
+                            </>
+                        }/>
+
+                    </div>
+
+                    <PropertiesPage ticketId={ticketId}/>
+
+                    <div className="">
                         <h4>Assigned Worker</h4>
-                        {userData && renderAssignedUserDropdown()}
+                        {/*{userData && renderAssignedUserDropdown()}*/}
                     </div>
                 </div>
 
-                <div className="grid grid-2-cols">
-                    <Panel className={"ticket-title-section ticket-margins"} children={
-                        <>
-                            <h4 className="ticket-title mb-1">Title</h4>
-                            <textarea onChange={(e) => setTitle(e.target.value)} value={title} className="ticket-title--input"></textarea>
-                        </>
-                    }/>
-                </div>
-                <div className="grid grid-3-cols">
-                    <Panel className={"ticket-description-section ticket-margins"} children={
-                        <>
-                            <h4 className="ticket-description mb-1">Description</h4>
-                            <textarea onChange={(e) => setDescription(e.target.value)} value={description} className="ticket-description--input"></textarea>
-                        </>
-                    }/>
-                </div>
-                {renderComments}
-                <div className="grid grid-4-cols">
-                    <Panel className={"ticket-comments-section ticket-margins"} children={
-                        <>
-                            <h4 className="ticket-comments mb-1">Add new comment</h4>
-                            <textarea className="ticket-comments--input"></textarea>
-                        </>
-                    }/>
-                </div>
 
             </div>
         );

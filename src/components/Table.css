@@ -1,0 +1,42 @@
+.row-title {
+    padding: 1rem;
+    border-bottom: solid 1px #ccc;
+}
+
+.dash-row--data {
+    font-size: 1.6rem;
+}
+
+.dash-row--data:hover,
+.dash-row--data:active{
+    background-color: #eee;
+    cursor: pointer;
+}
+
+.table-headers {
+    /*display: block;*/
+    /*margin-right: 3rem;*/
+    font-size: 1.8rem;
+    /*padding-right: 18rem;*/
+    /*text-align: center;*/
+    background-color: #eee;
+    /*margin-left: 2rem;*/
+    /*justify-content: space-between;*/
+    /*padding-bottom: 2rem;*/
+    /*display: inline-block;*/
+    padding: 1rem;
+}
+
+.table {
+    margin-top: 2rem;
+    background-color: white;
+    /*padding: 1.5rem 0;*/
+    color: teal;
+    /*color: black;*/
+    border-radius: 2px;
+    border: solid 1px #ccc;
+}
+
+thead {
+    text-align: left;
+}

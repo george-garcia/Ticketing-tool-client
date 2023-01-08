@@ -1,11 +1,25 @@
 import Panel from "./Panel";
+import './TicketComment.css';
 
-const TicketComment = ({ comment }) => {
+const TicketComment = ({comment}) => {
+
+    const seconds = Date.parse(comment.createdAt);
+    const date = new Date(seconds);
+
+
+
     return (
-        <div className="grid grid-4-cols">
-            <Panel className={"ticket-comments-section ticket-margins"} children={
+        <div className="">
+            <Panel className={""} children={
                 <>
-                    <textarea readOnly value={comment} className="ticket-comments--input"></textarea>
+                    <div className="comment-container">
+                        <div className="comment-title--container">
+                            <p className="">Comment</p>
+                            <p>{comment.createdBy}</p>
+                        </div>
+                        <p>{date.toLocaleString()}</p>
+                    </div>
+                    <p className="comment-detail">{comment.comment}</p>
                 </>
             }/>
         </div>

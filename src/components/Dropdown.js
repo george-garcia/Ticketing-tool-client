@@ -24,6 +24,7 @@ function Dropdown ({ options, current, handleSelectionState }) {
 
         //cleanup function to remove the event listener when the dropdown is no longer on the screen
         return () => {
+            setIsOpen(false);
             document.removeEventListener('click', handler);
         };
     }, [])
@@ -44,21 +45,21 @@ function Dropdown ({ options, current, handleSelectionState }) {
     //we map through our passed in options array to display them as selections in our component
     const renderedOptions = options.map(option => {
         return (
-            <div className="dropdown-options" onClick={() => handleOptionClick(option)} key={option.id}>
-                {option.name}
+            <div key={option.value} className="dropdown--options" onClick={() => handleOptionClick(option)}>
+                {option.value}
             </div>
         );
     });
 
     //if no current selection was passed in as current then we display 'select'... html
     let content = 'Select...';
-    if(current?.name)
-        content = current.name;
+    if(current?.value)
+        content = current.value;
 
     return (
-        <div ref={dropdownRef} className="component-dropdown">
-            <div onClick={openCloseDropdown}>{content}</div>
-            <div>{isOpen && renderedOptions}</div>
+        <div ref={dropdownRef} className="component-dropdown" onClick={openCloseDropdown}>
+            <div className="dropdown-current">{content}</div>
+            <div className="dropdown-options-container">{isOpen && renderedOptions}</div>
         </div>
     );
 

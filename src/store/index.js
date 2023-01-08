@@ -33,7 +33,7 @@ setupListeners(store.dispatch);
 
 export {useFetchUsersQuery, useUpdateUserMutation, useFetchOneUserQuery, useDeleteUserMutation} from './apis/usersApi';
 export {useRegisterUserQuery, useLoginUserMutation} from './apis/authApi';
-export {useCreateTicketMutation, useDeleteTicketMutation, useFetchOneTicketQuery, useFetchTicketsQuery, useUpdateTicketMutation} from './apis/ticketsApi';
+export {useCreateTicketMutation, useDeleteTicketMutation, useFetchOneTicketQuery, useFetchTicketsQuery, useUpdateTicketMutation, useAddNewCommentMutation} from './apis/ticketsApi';
 
 
 export { store };

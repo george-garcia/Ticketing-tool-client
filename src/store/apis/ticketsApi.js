@@ -18,19 +18,31 @@ const ticketsApi = createApi({
     endpoints(builder) {
         return {
             updateTicket: builder.mutation({
-                invalidatesTags: ['tickets'],
+                invalidatesTags: (result, error, ticket) => {
+                    return [{ type: 'tickets', id: ticket.ticketId}]
+                },
                 query(arg) {
                     return {
                         url: `/${arg.ticketId}`,
                         method: 'PATCH',
-                        body: arg.body
+                        body: arg
+                    }
+                }
+            }),
+            addNewComment: builder.mutation({
+                invalidatesTags: (result, error, ticket) => {
+                    return [{ type: 'tickets', id: ticket.ticketId}]
+                },
+                query(comment) {
+                    return {
+                        url: `/${comment.ticketId}`,
+                        method: 'POST',
+                        body: comment.body
                     }
                 }
             }),
             fetchTickets: builder.query({
-                providesTags: (result, error, user) => {
-                    return [{type: 'tickets'}]
-                },
+                providesTags: ['tickets'],
                 query(user) {
                     return {
                         url: '/',
@@ -40,6 +52,9 @@ const ticketsApi = createApi({
                 }
             }),
             fetchOneTicket: builder.query({
+                providesTags: (result, error, ticket) => {
+                    return [{ type: 'tickets', id: ticket}];
+                },
                 query(id) {
                     return {
                         url: `/${id}`,
@@ -70,5 +85,9 @@ const ticketsApi = createApi({
     }
 });
 
-export const {useCreateTicketMutation, useDeleteTicketMutation, useFetchOneTicketQuery, useFetchTicketsQuery, useUpdateTicketMutation} = ticketsApi;
+export const {useCreateTicketMutation, useDeleteTicketMutation, useFetchOneTicketQuery, useFetchTicketsQuery, useUpdateTicketMutation, useAddNewCommentMutation} = ticketsApi;
 export {ticketsApi};
+
+//providesTags: (result, error, user) => {
+//                     return [{type: 'tickets'}]
+//                 },

@@ -2,18 +2,38 @@
     font-size: 1.8rem;
     background-color: #444;
     color: white;
-    display: inline-block;
+    /*display: inline-block;*/
     padding: 1rem;
     /*min-width: 15rem;*/
-    border-radius: 5px;
+    /*border-radius: 5px;*/
     cursor: pointer;
+    /*position: absolute;*/
+    /*width: 100%;*/
+    display: flex;
+    border-radius: 2px;
 
 }
 
-.dropdown-options {
-    margin-bottom: 1rem;
+.dropdown-options-container {
+    position: absolute;
+    background-color: teal;
+    transform: translate(21rem, -1rem);
+    border-radius: 2px;
+}
+
+.dropdown--options {
+    /*margin-bottom: 1rem;*/
+    padding: 1rem;
+    /*background-color: red;*/
 }
 
 .dropdown-options:first-child {
-    margin-top: 1rem;
+    /*margin-top: 1rem;*/
+}
+
+.dropdown-current {
+    /*display: block;*/
+    /*width: 100%;*/
+    min-width: 20rem;
+    /*display: block;*/
 }

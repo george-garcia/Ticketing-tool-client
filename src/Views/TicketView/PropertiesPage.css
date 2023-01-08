@@ -1,0 +1,60 @@
+.ticket-properties {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    padding: 2rem;
+    border-radius: 2px;
+    height: 100%;
+}
+
+.ticket-properties--header {
+    margin-bottom: 2rem;
+}
+
+.ticket-properties--label {
+    font-size: 1.5rem;
+    margin-bottom: .8rem;
+}
+
+.ticket-properties--value {
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
+    font-weight: 500;
+}
+
+.ticket-properties--input {
+    max-width: 22rem;
+    /*padding: 0 1rem;*/
+    /*border: none;*/
+    /*border-bottom: 2px solid teal;*/
+}
+
+.ticket-properties--input::placeholder {
+    color: black;
+    opacity: 100%;
+}
+
+.ticket-properties--footer {
+    border-top: 2px solid var(--primary-color-400);
+    /*margin-top: 2rem;*/
+    padding-top: 2rem;
+    width: 100%;
+}
+
+.ticket-properties--btn {
+    width: 100%;
+}
+
+.btn {
+    padding: 1.2rem 2.4rem;
+    background-color: var(--primary-color-400);
+    border: none;
+    border-radius: 2px;
+    font-size: 1.6rem;
+    font-weight: 500;
+}
+
+.btn:hover,
+.btn:active {
+    cursor: pointer;
+}
