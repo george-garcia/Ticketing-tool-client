@@ -17,9 +17,14 @@
 .comment-container {
     display: flex;
     justify-content: space-between;
+    margin-bottom: 2rem;
 }
 
-.comment-title--container {
-    display: flex;
-    gap: 2rem;
+.comment--name {
+    font-weight: 500;
+    color: black;
+}
+
+.comment--comment {
+    color: #555;
 }

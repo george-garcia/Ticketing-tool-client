@@ -10,17 +10,18 @@ import {useState, useEffect} from "react";
 import Panel from "../../components/Panel";
 import TicketComment from "../../components/TicketComment";
 import PropertiesPage from "./PropertiesPage";
+import AssignedPage from "./AssignedPage";
 
 const TicketPage = () => {
         const {ticketId} = useParams();
         const {data: ticketData, isLoading: ticketIsLoading, currentData} = useFetchOneTicketQuery(ticketId);
         const {data: userData, isLoading: userDataIsLoading} = useFetchUsersQuery();
+
         const [updateComment] = useAddNewCommentMutation();
         const [updateTicket] = useUpdateTicketMutation();
+
         const [ticket, setTicket] = useState({});
-        const [ticketCreator, setTicketCreator] = useState({});
-        const [ticketAssignedWorker, setTicketAssignedWorker] = useState({});
-        const [assignedWorkerSelection, setAssignedWorkerSelection] = useState({});
+        const [customer, setCustomer] = useState({});
         const [title, setTitle] = useState('');
         const [description, setDescription] = useState('');
         const [comments, setComments] = useState([]);
@@ -56,12 +57,10 @@ const TicketPage = () => {
                 users.forEach(user => {
                     // if we find the person who created the ticket, put their object in local state
                     if (user._id === creatorId) {
-                        setTicketCreator(user);
+
+                        setCustomer(user);
                     }
                     // if we find the person assigned to work the ticket, put their object in local state
-                    if (assignedId && user._id === assignedId) {
-                        setTicketAssignedWorker(user);
-                    }
                 });
             }
         },);
@@ -72,6 +71,7 @@ const TicketPage = () => {
                 return <TicketComment key={comment._id} comment={comment}/>
             });
         }
+
 
         function addNewComment() {
             if (newComment) {
@@ -88,6 +88,20 @@ const TicketPage = () => {
             }
         }
 
+        function renderCustomerFullName(){
+
+            if(!customer?.firstName)
+                return;
+
+            const firstName = customer.firstName[0].toUpperCase() + customer.firstName.slice(1);
+            const lastName = customer.lastName[0].toUpperCase() + customer.lastName.slice(1);
+            const fullName = `${firstName} ${lastName}`;
+
+            return fullName;
+        }
+
+
+
         return (
             <div className="section-ticketPage">
 
@@ -99,7 +113,7 @@ const TicketPage = () => {
                                     <input onChange={(e) => setTitle(e.target.value)} value={title || ""}
                                            className="ticket-title--input"></input>
                                     <div className="ticket-container--time">
-                                        <p><span>Sheen Adrian</span> reported an issue</p>
+                                        <p><span>{renderCustomerFullName()}</span> reported an issue</p>
                                         <p>4 hours ago</p>
                                     </div>
                                 </div>
@@ -115,7 +129,7 @@ const TicketPage = () => {
                             <>
                                 <div className="newComment-container">
                                     <h4 className="ticket-comments">Add new comment</h4>
-                                    <button onClick={addNewComment}>Save new comment</button>
+                                    <button className="btn" onClick={addNewComment}>Save new comment</button>
                                 </div>
                                 <textarea onChange={(e) => setNewComment(e.target.value)} value={newComment}
                                           className="ticket-comments--input"></textarea>
@@ -126,10 +140,7 @@ const TicketPage = () => {
 
                     <PropertiesPage ticketId={ticketId}/>
 
-                    <div className="">
-                        <h4>Assigned Worker</h4>
-                        {/*{userData && renderAssignedUserDropdown()}*/}
-                    </div>
+                    <AssignedPage ticketId={ticketId}/>
                 </div>
 
 

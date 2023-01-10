@@ -1,5 +1,5 @@
 import './PropertiesPage.css';
-import {useFetchUsersQuery, useFetchOneTicketQuery} from "../../store";
+import {useFetchUsersQuery, useFetchOneTicketQuery, useUpdateTicketMutation} from "../../store";
 import {useEffect, useState} from "react";
 import Dropdown from "../../components/Dropdown";
 
@@ -7,6 +7,7 @@ function PropertiesPage({ticketId}) {
     //load our ticket and users
     const {data: ticketData, isLoading: ticketIsLoading} = useFetchOneTicketQuery(ticketId);
     const {data: usersData, isLoading: usersIsLoading} = useFetchUsersQuery();
+    const [updateTicket, ticketResults] = useUpdateTicketMutation();
 
     //set our ticket and customer objects into state
     const [ticket, setTicket] = useState({});
@@ -42,6 +43,7 @@ function PropertiesPage({ticketId}) {
             }
         }
     });
+
 
     useEffect(() => {
 
@@ -145,35 +147,95 @@ function PropertiesPage({ticketId}) {
 
     function renderAssigned() {
 
-        if (!customer?.firstName)
+        if (!usersData?.users)
             return;
 
-        /*
+        const usersArr = usersData.users.map(user => {
+            const firstName = user.firstName[0].toUpperCase() + user.firstName.slice(1);
+            const lastName = user.lastName[0].toUpperCase() + user.lastName.slice(1);
+            const fullName = `${firstName} ${lastName}`;
 
-        const usersArr = userData.users.map(user => {
                 return {
-                    name: `${user.firstName} ${user.lastName}`,
+                    value: fullName,
                     id: user._id,
                 }
             });
 
-         */
+        const noneAssigned = {
+            value: 'None',
+            id: null
+        };
 
-        let firstName = customer.value.firstName[0].toUpperCase() + customer.value.firstName.slice(1);
-        let lastName = customer.value.lastName[0].toUpperCase() + customer.value.lastName.slice(1);
-        const fullName = `${firstName} ${lastName}`;
-        return fullName;
+        usersArr.push(noneAssigned);
+
+        return <Dropdown options={usersArr} current={assignedDropdown} handleSelectionState={setAssignedDropdown} />
+    }
+
+    function saveChanges(){
+
+        if(!usersData?.users || !ticketData.ticket)
+            return;
+
+        const queryObject = {};
+
+        //status dropdown
+        if(statusDropdown.value !== ticket.status)
+            queryObject.status = statusDropdown.value
+
+        //priority
+        if(priorityDropdown.value !== ticket.priority)
+            queryObject.priority = priorityDropdown.value
+
+        //impact
+        if(impactDropdown.value !== ticket.impact)
+            queryObject.impact = impactDropdown.value
+
+        //category
+        if(categoryDropdown.value !== ticket.category)
+            queryObject.category = categoryDropdown.value
+
+        //product
+        if(productDropdown.value !== ticket.product)
+            queryObject.product = productDropdown.value
+
+        //contact
+        if(contactDropdown)
+            queryObject.contact = contactDropdown;
+
+        //assigned
+        //check if the ticket is attempting to assign
+        if(assignedDropdown?.value){
+            //check if the attempt to assign is different from what the ticket has assigned to it
+            if(assignedDropdown.id !== ticket.assigned){
+                //if different then put the new assigned on the query object
+                queryObject.assigned = assignedDropdown.id;
+            }
+        }
+
+        // if no changes where made we should not make a request with an empty object and instead return
+        if(Object.keys(queryObject).length === 0)
+            return;
+
+        //put the ticketId on the query object
+        queryObject.ticketId = ticketId;
+        //
+        // //dispatch our query object with the updateTicket mutation
+        updateTicket(queryObject).unwrap();
+
+        //assigned
+
+
+
     }
 
 
     return (
         <div className="ticket-properties">
-            {/*{renderCreatorData()}*/}
             <h3 className="ticket-properties--header">PROPERTIES</h3>
             <p className="ticket-properties--label"> Customer</p>
             <p className="ticket-properties--value">{renderCustomerName()}</p>
             <p className="ticket-properties--label"> Assigned</p>
-            <p className="ticket-properties--value">{assignedDropdown.value}</p>
+            <div className="ticket-properties--value">{renderAssigned()}</div>
             <p className="ticket-properties--label"> Status</p>
             <div className="ticket-properties--value">{renderStatusDropdown()}</div>
             <p className="ticket-properties--label"> Priority</p>
@@ -192,7 +254,7 @@ function PropertiesPage({ticketId}) {
             <div className="ticket-properties--value">{renderProductDropdown()}</div>
 
             <div className="ticket-properties--footer">
-                <button className="btn ticket-properties--btn">Save Changes</button>
+                <button onClick={saveChanges} className="btn ticket-properties--btn">Save Changes</button>
             </div>
 
         </div>
