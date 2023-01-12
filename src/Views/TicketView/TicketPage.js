@@ -83,7 +83,7 @@ const TicketPage = () => {
                         comments: newComment
                     }
                 };
-                updateComment(comment);
+                updateComment(comment).unwrap();
                 setNewComment('');
             }
         }

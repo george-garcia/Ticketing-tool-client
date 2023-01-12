@@ -3,6 +3,8 @@ import DashboardPage from "./Views/DashboardView/DashboardPage";
 import {BrowserRouter, Routes, Route, renderMatches} from "react-router-dom";
 import AuthPage from "./Views/AuthView/AuthPage";
 import TicketPage from "./Views/TicketView/TicketPage";
+import AllTickets from "./pages/AllTickets";
+import OpenTickets from "./pages/OpenTickets";
 import RegisterPage from "./Views/AuthView/RegisterPage";
 import {useFetchUsersQuery, useFetchOneUserQuery} from "./store";
 import {useRegisterUserQuery} from "./store";
@@ -19,6 +21,16 @@ function App() {
                     <Route path="/dashboard" element={
                         <>
                             <NavPage children={<DashboardPage/>} />
+                        </>
+                    }/>
+                    <Route path="/all-tickets" element={
+                        <>
+                            <NavPage children={<AllTickets/>} />
+                        </>
+                    }/>
+                    <Route path="/open-tickets" element={
+                        <>
+                            <NavPage children={<OpenTickets/>} />
                         </>
                     }/>
                     {/*<Route path="/login" element={<LoginHook/>}/>*/}

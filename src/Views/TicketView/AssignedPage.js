@@ -21,7 +21,7 @@ function AssignedPage({ ticketId }) {
 
     useEffect(() => {
 
-        if (ticket?.assigned && !usersIsLoading) {
+        if (!usersIsLoading) {
 
             for (const user of usersData.users) {
                 if (ticket.assigned === user._id) {
@@ -36,10 +36,8 @@ function AssignedPage({ ticketId }) {
                     setAssigned(assignedObject);
                 }
             }
-        } else {
-            setAssigned(null);
         }
-    }, [ticket]);
+    }, [ticket, usersData]);
 
     console.log(assigned);
 

@@ -1,14 +1,17 @@
 .section-nav {
     display: grid;
     grid-template-columns: 1fr 7fr;
+    color: white;
     /*grid-template-rows: 80 1fr;*/
 }
+
 .nav-top {
     background-color: var(--dark-color-900);
     grid-column: 1 / 3;
     height: 6.4rem;
     border-bottom: solid 1px var(--text-light-100);
 }
+
 .nav-left {
     background-color: var(--dark-color-900);
     height: calc(100vh - 6.4rem);
@@ -16,4 +19,28 @@
 
 .nav-body {
     background-color: #ffffff;
+}
+
+.list-styles {
+    font-size: 1.8rem;
+    list-style: none;
+    margin-left: 3.2rem;
+}
+
+.nav-left--firstList {
+    margin-top: 4rem;
+    margin-bottom: 6.4rem;
+
+}
+
+.nav-left--secondList {
+    margin-bottom: 6.4rem;
+}
+
+.nav-left--thirdList {
+
+}
+
+.nav--item {
+    margin-bottom: 2rem;
 }
