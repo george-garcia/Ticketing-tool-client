@@ -12,11 +12,11 @@ function Table({data, config, keyFn}) {
     const renderedRows = data.map((rowData) => {
             return (
                 <tr onClick={(e) => handleClick(rowData._id)} key={rowData._id} className="dash-row--data">
-                    <td className="row-title">{rowData._id}</td>
-                    <td className="row-title">{rowData.title}</td>
-                    <td className="row-title">{rowData.description}</td>
-                    <td className="row-title">{rowData.priority}</td>
-                    <td className="row-title">{rowData.status}</td>
+                    <td className="row-data">{rowData._id}</td>
+                    <td className="row-data row-title">{rowData.title}</td>
+                    <td className="row-data">{rowData.description}</td>
+                    <td className="row-data">{rowData.priority}</td>
+                    <td className="row-data">{rowData.status}</td>
                 </tr>
             );
         }

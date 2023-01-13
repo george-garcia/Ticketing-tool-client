@@ -5,6 +5,7 @@ import Pie from "./Pie";
 import Panel from "../../components/Panel";
 import jwtDecode from "jwt-decode";
 import {useState, useEffect} from "react";
+import {skipToken} from "@reduxjs/toolkit/query";
 
 const DashboardPage = () => {
 
@@ -32,7 +33,7 @@ const DashboardPage = () => {
 
             const secondsInOneHour = 3600;
 
-            if(ticket.status !== 'Resolved' && ticket.status !== 'Closed') {
+            if (ticket.status !== 'Resolved' && ticket.status !== 'Closed') {
                 if (currentSeconds - ticketSeconds > (secondsInOneHour * 2))
                     setOverdueTickets(state => state + 1);
             }
@@ -57,15 +58,23 @@ const DashboardPage = () => {
             label: 'Status',
         },];
 
-    if (ticketData) {
-        renderedTable = <Table data={ticketData.tickets} config={config}/>;
-    }
+    const token = jwtDecode(localStorage.getItem('token').split(' ')[1]);
+    const {userId} = token;
+
+    if (!ticketData || isLoading)
+        return;
+
+    const myTicketData = ticketData.tickets.filter(ticket => {
+        return ticket.assigned === userId && ticket.status !== 'Resolved';
+    });
+
+    renderedTable = <Table data={myTicketData} config={config}/>;
 
     if (isLoading || !ticketData)
         return;
 
     let open, assigned, pending, inProgress, minor, major, critical;
-    open = assigned = pending = inProgress = minor = major = critical  = 0;
+    open = assigned = pending = inProgress = minor = major = critical = 0;
 
     // const token = localStorage.getItem('token').split(' ')[1];
     // const decoded = jwtDecode(token);
@@ -127,26 +136,26 @@ const DashboardPage = () => {
             "id": "Open",
             "label": "Open",
             "value": open,
-            "color": "#2668D9FF",
+            "color": "#86efac",
 
         },
         {
             "id": "Assigned",
             "label": "Assigned",
             "value": assigned,
-            "color": "black",
+            "color": "#2338DC",
         },
         {
             "id": "Pending",
             "label": "Pending",
             "value": pending,
-            "color": "hsl(218, 70%, 50%)"
+            "color": "#DCC723"
         },
         {
             "id": "In progress",
             "label": "In progress",
             "value": inProgress,
-            "color": "hsl(215, 70%, 50%)"
+            "color": "#f9a8d4"
         },
     ];
 
@@ -155,20 +164,20 @@ const DashboardPage = () => {
             "id": "Minor",
             "label": "Minor",
             "value": minor,
-            "color": "#2668D9FF",
+            "color": "#86efac",
 
         },
         {
             "id": "Major",
             "label": "Major",
             "value": major,
-            "color": "black",
+            "color": "#f9a8d4",
         },
         {
             "id": "Critical",
             "label": "Critical",
             "value": critical,
-            "color": "hsl(218, 70%, 50%)"
+            "color": "red"
         },
     ];
 
@@ -220,7 +229,7 @@ const DashboardPage = () => {
                 }
                 />
             </div>
-            <p className="dash-subheading">View all tickets</p>
+            <p className="dash-subheading">My Tickets</p>
             {renderedTable || <h1>Loading...</h1>}
         </div>
     );

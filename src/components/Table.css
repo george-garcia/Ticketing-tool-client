@@ -1,7 +1,12 @@
-.row-title {
+.row-data {
     padding: 1rem;
     border-bottom: solid 1px #ccc;
 }
+
+.row-title {
+    color: teal;
+}
+
 
 .dash-row--data {
     font-size: 1.6rem;
@@ -31,7 +36,7 @@
     margin-top: 2rem;
     background-color: white;
     /*padding: 1.5rem 0;*/
-    color: teal;
+    color: #333;
     /*color: black;*/
     border-radius: 2px;
     border: solid 1px #ccc;

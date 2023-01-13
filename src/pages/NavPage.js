@@ -1,25 +1,42 @@
 import './NavPage.css';
 import {Link} from "react-router-dom";
+import {useRef} from "react";
 const NavPage = ({children}) => {
+    let currentRef = useRef();
+
+    // console.log(currentRef);
+
+    function handleClick(e){
+        currentRef = document.querySelector('.link--active');
+        if(currentRef)
+            currentRef.classList.remove('link--active');
+
+        e.target.classList.toggle('link--active');
+    }
+
+
+
     return (
         <div className="section-nav">
             <div className="nav-top">top</div>
             <div className="nav-left">
-                <ul className="nav-left--firstList list-styles">
-                    <li className="nav--item"><Link to={'/all-tickets'}>All Tickets</Link></li>
-                    <li className="nav--item">New Ticket</li>
-                </ul>
-                <ul className="nav-left--secondList list-styles">
-                    <li className="nav--item"><Link to={'/dashboard'}>My Dashboard</Link></li>
-                    <li className="nav--item">My Open Tickets</li>
-                    <li className="nav--item">Unassigned Tickets</li>
-                </ul>
-                <ul className="nav-left--thirdList list-styles">
-                    <li className="nav--item"><Link to={'/open-tickets'}>Open</Link></li>
-                    <li className="nav--item">Assigned</li>
-                    <li className="nav--item">In Progress</li>
-                    <li className="nav--item">Pending</li>
-                </ul>
+
+                <div className="nav-left--list mb-6">
+                    <Link onClick={event => handleClick(event)} className={"link--item"} to={'/all-tickets'}>All Tickets</Link>
+                    <a onClick={event => handleClick(event)} className={"link--item"} href="#">New Ticket</a>
+                </div>
+                <hr className={"mb-6"}/>
+                <div className="nav-left--list mb-6">
+                    <Link onClick={event => handleClick(event)} className={"link--item"} to={'/dashboard'}>My Dashboard</Link>
+                    <Link onClick={event => handleClick(event)} className={"link--item"} to={'/my-open-tickets'}>My Open Tickets</Link>
+                </div>
+                <hr className={"mb-6"}/>
+                <div className="nav-left--list">
+                    <Link onClick={event => handleClick(event)} className={"link--item"} to={'/open-tickets'}>Open</Link>
+                    <Link onClick={event => handleClick(event)} className={"link--item"} to={'/assigned-tickets'}>Assigned</Link>
+                    <Link onClick={event => handleClick(event)} className={"link--item"} to={'/in-progress-tickets'}>In Progress</Link>
+                    <Link onClick={event => handleClick(event)} className={"link--item"} to={'/pending-tickets'}>Pending</Link>
+                </div>
             </div>
             <div className="nav-body">{children}</div>
         </div>

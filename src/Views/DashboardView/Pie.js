@@ -13,7 +13,7 @@ const Pie = ({data  /* see data tab */}) => {
     return (
             <ResponsivePie data={data}
                            // colors={{ datum: 'data.color' }}
-                           colors={{"scheme":"purpleRed_green"}}
+                           colors={{ datum: 'data.color' }}
                            margin={{top: 20, right: 80, bottom: 58, left: 80}}
                            innerRadius={0.6}
                            padAngle={0.5}

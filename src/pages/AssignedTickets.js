@@ -20,16 +20,16 @@ function AllTickets() {
             label: 'Status',
         },];
 
-    const openTicketData = ticketData.tickets.filter(ticket => {
-        return ticket.status === 'Open';
+    const assignedTicketData = ticketData.tickets.filter(ticket => {
+        return ticket.status === 'Assigned';
     });
 
-    const renderedTable = <Table data={openTicketData} config={config}/>;
+    const renderedTable = <Table data={assignedTicketData} config={config}/>;
 
 
     return (
         <div className={"section-all-tickets ticketPage--margins"}>
-            <h2 className="dash-heading">Open Tickets</h2>
+            <h2 className="dash-heading">Assigned Tickets</h2>
             {renderedTable || <h1>Loading...</h1>}
         </div>
     );
