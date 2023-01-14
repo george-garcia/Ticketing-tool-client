@@ -81,3 +81,14 @@
     margin-right: 2rem;
     margin-top: 2rem;
 }
+
+.label {
+    font-size: 1.5rem;
+    margin-bottom: .8rem;
+}
+
+.label--value {
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
+    font-weight: 500;
+}

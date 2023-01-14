@@ -1,6 +1,8 @@
 import './NavPage.css';
 import {Link} from "react-router-dom";
 import {useRef} from "react";
+import { HiClipboardDocumentCheck, HiTicket, HiClock, HiHome, HiPresentationChartLine, HiPencilSquare } from "react-icons/hi2";
+import { GiHourglass } from "react-icons/gi";
 const NavPage = ({children}) => {
     let currentRef = useRef();
 
@@ -22,20 +24,20 @@ const NavPage = ({children}) => {
             <div className="nav-left">
 
                 <div className="nav-left--list mb-6">
-                    <Link onClick={event => handleClick(event)} className={"link--item"} to={'/all-tickets'}>All Tickets</Link>
-                    <a onClick={event => handleClick(event)} className={"link--item"} href="#">New Ticket</a>
+                    <Link onClick={event => handleClick(event)} className={"link--item"} to={'/all-tickets'}>{<HiTicket/>}All Tickets</Link>
+                    <Link onClick={event => handleClick(event)} className={"link--item"} to="/new-ticket">{<HiPencilSquare/>}New Ticket</Link>
                 </div>
                 <hr className={"mb-6"}/>
                 <div className="nav-left--list mb-6">
-                    <Link onClick={event => handleClick(event)} className={"link--item"} to={'/dashboard'}>My Dashboard</Link>
-                    <Link onClick={event => handleClick(event)} className={"link--item"} to={'/my-open-tickets'}>My Open Tickets</Link>
+                    <Link onClick={event => handleClick(event)} className={"link--item"} to={'/dashboard'}>{<HiHome/>} My Dashboard</Link>
+                    <Link onClick={event => handleClick(event)} className={"link--item"} to={'/my-open-tickets'}>{<HiTicket/>}My Open Tickets</Link>
                 </div>
                 <hr className={"mb-6"}/>
                 <div className="nav-left--list">
-                    <Link onClick={event => handleClick(event)} className={"link--item"} to={'/open-tickets'}>Open</Link>
-                    <Link onClick={event => handleClick(event)} className={"link--item"} to={'/assigned-tickets'}>Assigned</Link>
-                    <Link onClick={event => handleClick(event)} className={"link--item"} to={'/in-progress-tickets'}>In Progress</Link>
-                    <Link onClick={event => handleClick(event)} className={"link--item"} to={'/pending-tickets'}>Pending</Link>
+                    <Link onClick={event => handleClick(event)} className={"link--item"} to={'/open-tickets'}>{<HiTicket/>} Open</Link>
+                    <Link onClick={event => handleClick(event)} className={"link--item"} to={'/assigned-tickets'}>{<HiClipboardDocumentCheck/>}Assigned</Link>
+                    <Link onClick={event => handleClick(event)} className={"link--item"} to={'/in-progress-tickets'}>{<HiPresentationChartLine/>} In Progress</Link>
+                    <Link onClick={event => handleClick(event)} className={"link--item"} to={'/pending-tickets'}>{<HiClock/>}Pending</Link>
                 </div>
             </div>
             <div className="nav-body">{children}</div>

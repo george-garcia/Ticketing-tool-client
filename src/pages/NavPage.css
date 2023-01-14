@@ -30,6 +30,12 @@
     font-weight: 500;
 }
 
+.link--item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
 .link--item:link,
 .link--item:visited {
     text-decoration: none;
