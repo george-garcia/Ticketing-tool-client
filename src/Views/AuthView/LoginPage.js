@@ -43,7 +43,7 @@ const LoginPage = () => {
 
             <input onChange={(e) => setPassword(e.target.value)}
                    value={password} type="password" placeholder="password" className="login-password"/>
-            <button className="btn-login">Login</button>
+            <button className="btn-login btn">Login</button>
             {errorMsg ? <h6>{errorMsg}</h6> : null}
             {!errorMsg && isSuccess ? <h1>Loading dashboard...</h1> : null}
             {loginSuccess && <Navigate to={"/dashboard"} state={{from: location}}/>}

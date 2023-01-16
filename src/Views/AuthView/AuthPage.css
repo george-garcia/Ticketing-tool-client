@@ -45,12 +45,12 @@
 }
 
 .auth-selector--active {
-    background-color: red;
+    background-color: var(--secondary-color-500);
 }
 
 .auth-form {
-    background-color: var(--primary-color-900);
-    color: var(--primary-color-400);
+    background-color: var(--primary-color-100);
+    color: var(--secondary-color-600);
     font-size: 2.4rem;
     padding: 3rem;
     width: 100%;

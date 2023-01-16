@@ -18,7 +18,7 @@ const RegisterPage = () => {
             </div>
             <input type="text" placeholder="email"/>
             <input type="password" placeholder="password"/>
-            <button className="btn-register">Register</button>
+            <button className="btn-register btn">Register</button>
         </form>
     );
 }

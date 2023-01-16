@@ -33,7 +33,9 @@ const NavPage = ({children}) => {
     return (
         <div className="section-nav">
             <div className="nav-top">
-                <div>LOGO</div>
+                <div>
+                    <h4>Help Desk Hero</h4>
+                </div>
                 <div className={"nav-top--right"}>
                     {/*<button className="nav-search--icon">{<HiMagnifyingGlassCircle/>}</button>*/}
                     <input placeholder={"search tickets"} type="text" className="nav-search"/>
