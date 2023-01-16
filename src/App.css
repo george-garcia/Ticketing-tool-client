@@ -46,6 +46,8 @@
 
     --text-light-100: #eee;
 
+    --box-shadow: 0 5px 5px 2px rgba(0, 0, 0, 0.1);
+
     /*
         primary 400
         pink secondary #DC2395

@@ -6,9 +6,39 @@
     padding: 2rem 0 0 2rem;
 }
 
+.new-ticket--heading {
+    margin-bottom: 2rem;
+}
+
 .new-ticket-panel {
     /*margin: 2rem 0 0 2rem;*/
     background-color: white;
     display: inline-block;
     padding: 2rem;
+    box-shadow: var(--box-shadow);
+}
+
+.new-ticket--input {
+    width: 100%;
+}
+
+.new-ticket--impact {
+    width: 22rem;
+}
+
+.new-ticket--textarea {
+    font: inherit;
+    resize: none;
+}
+
+.new-ticket--btn {
+}
+
+.new-ticket--error {
+    position: absolute;
+    transform: translateY(-2rem);
+    padding: 2rem;
+    background-color: white;
+    box-shadow: var(--box-shadow);
+    color: var(--secondary-color-700);
 }
