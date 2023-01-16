@@ -1,10 +1,14 @@
 import './NavPage.css';
 import {Link} from "react-router-dom";
 import {useRef} from "react";
-import { HiClipboardDocumentCheck, HiTicket, HiClock, HiHome, HiPresentationChartLine, HiPencilSquare } from "react-icons/hi2";
-import { GiHourglass } from "react-icons/gi";
+import { HiClipboardDocumentCheck, HiTicket, HiClock, HiHome, HiPresentationChartLine, HiPencilSquare, HiMagnifyingGlassCircle } from "react-icons/hi2";
+import {useFetchOneUserQuery} from "../store";
+import jwtDecode from "jwt-decode";
 const NavPage = ({children}) => {
     let currentRef = useRef();
+
+    const {userId} = jwtDecode(localStorage.getItem('token').split(' ')[1]);
+    const {data, isLoading} = useFetchOneUserQuery(userId);
 
     // console.log(currentRef);
 
@@ -16,11 +20,27 @@ const NavPage = ({children}) => {
         e.target.classList.toggle('link--active');
     }
 
+    if(!data || isLoading)
+        return;
+
+    // console.log(data);
+
+    const {picture: avatar} = data.user;
+    console.log(avatar);
+
 
 
     return (
         <div className="section-nav">
-            <div className="nav-top">top</div>
+            <div className="nav-top">
+                <div>LOGO</div>
+                <div className={"nav-top--right"}>
+                    {/*<button className="nav-search--icon">{<HiMagnifyingGlassCircle/>}</button>*/}
+                    <input placeholder={"search tickets"} type="text" className="nav-search"/>
+                    <img className={"nav-avatar"} src={avatar} alt=""/>
+                </div>
+
+            </div>
             <div className="nav-left">
 
                 <div className="nav-left--list mb-6">

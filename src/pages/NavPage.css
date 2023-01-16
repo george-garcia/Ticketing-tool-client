@@ -11,6 +11,33 @@
     grid-column: 1 / 3;
     height: 6.4rem;
     border-bottom: solid 1px var(--text-light-100);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2rem;
+}
+
+.nav-top--right {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.nav-avatar {
+    object-fit: cover;
+    border-radius: 50%;
+    height: 5rem;
+    width: 5rem;
+    margin-left: 2rem;
+}
+
+.nav-search {
+    height: 3rem;
+    /*width: 30rem;*/
+}
+.nav-search--icon {
+    /*height: 3rem;*/
+    font-size: 3rem;
 }
 
 .nav-left {
