@@ -1,11 +1,12 @@
 import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
+import config from "./config";
 
 //localStorage.getItem('token')
 
 const ticketsApi = createApi({
     reducerPath: 'tickets',
     baseQuery: fetchBaseQuery({
-        baseUrl: 'http://localhost:3001/api/v1/tickets',
+        baseUrl: `${config}/api/v1/tickets`,
         prepareHeaders: (headers, {getState}) => {
             const token = localStorage.getItem('token');
             if(token){

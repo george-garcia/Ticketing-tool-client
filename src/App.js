@@ -18,6 +18,7 @@ import MyOpenTickets from "./pages/MyOpenTickets";
 import NewTicketPage from "./Views/NewTicketView/NewTicketPage";
 
 function App() {
+
     return (
         <div>
             <BrowserRouter>

@@ -1,9 +1,9 @@
 import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
-
+import config from "./config";
 const authApi = createApi({
     reducerPath: 'auth',
     baseQuery: fetchBaseQuery({
-        baseUrl: 'http://localhost:3001/api/v1/auth',
+        baseUrl: `${config}/api/v1/auth`,
         prepareHeaders: (headers, {getState}) => {
             const token = localStorage.getItem('token');
             if(!token)
