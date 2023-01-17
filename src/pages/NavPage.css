@@ -10,7 +10,7 @@
     background-color: var(--dark-color-900);
     grid-column: 1 / 3;
     height: 6.4rem;
-    border-bottom: solid 1px var(--text-light-100);
+    border-bottom: solid 2px white;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -44,7 +44,12 @@
     background-color: var(--dark-color-900);
     height: calc(100vh - 6.4rem);
     min-height: 100%;
+    padding-top: 2rem;
     /*height: 100%;*/
+}
+
+.nav-left hr {
+    color: white;
 }
 
 .nav-body {

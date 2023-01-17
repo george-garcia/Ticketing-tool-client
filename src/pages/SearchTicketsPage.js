@@ -11,10 +11,6 @@ function SearchTicketsPage(){
 
     // console.log(data);
 
-    function handleSubmit(e){
-        e.preventDefault();
-    }
-
     const config = [
         {label: 'Ticket ID',}, {
             label: 'Title',
@@ -38,18 +34,19 @@ function SearchTicketsPage(){
 
     }
 
-    const renderedTable = <Table data={handleData()} config={config}/>;
+    const renderedTable = <Table data={handleData()} config={config} results={15}/>;
 
 
     return (
         <div className={"section-search-tickets"}>
-            <form onSubmit={e => handleSubmit(e)}>
+            <div className={"search-tickets--heading"}>
+                <h2>Search Tickets by ID</h2>
                 <input type="text" value={searchTerm} onChange={e => setSearchTerm(e.target.value)}/>
-                <p>Search Tickets by ID</p>
-            </form>
+
+            </div>
 
             <div>
-                {renderedTable || <h1>Loading...</h1>}
+                {renderedTable}
             </div>
 
         </div>

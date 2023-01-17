@@ -46,3 +46,8 @@
 thead {
     text-align: left;
 }
+
+.table-footer {
+    display: flex;
+    justify-content: space-between;
+}
