@@ -16,6 +16,7 @@ import InProgress from "./pages/InProgress";
 import Pending from "./pages/Pending";
 import MyOpenTickets from "./pages/MyOpenTickets";
 import NewTicketPage from "./Views/NewTicketView/NewTicketPage";
+import SearchTicketsPage from "./pages/SearchTicketsPage";
 
 function App() {
 
@@ -40,6 +41,7 @@ function App() {
                     <Route path="/pending-tickets" element={<NavPage children={<Pending/>} />}/>
                     <Route path="/my-open-tickets" element={<NavPage children={<MyOpenTickets/>} />}/>
                     <Route path="/new-ticket" element={<NavPage children={<NewTicketPage/>} />}/>
+                    <Route path="/search-tickets" element={<NavPage children={<SearchTicketsPage/>} />}/>
                     {/*<Route path="/login" element={<LoginHook/>}/>*/}
                     <Route path="/tickets/:ticketId" element={
                         <>
