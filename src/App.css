@@ -104,6 +104,10 @@
     font-weight: 600;
 }
 
+.btn--outline:hover {
+    cursor: pointer;
+}
+
 .btn--active {
     background-color: teal;
     border: solid 1px teal !important;

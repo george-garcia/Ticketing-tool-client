@@ -17,6 +17,22 @@ function Table({data, config, keyFn, results}) {
         setTotalPages(Math.ceil(data.length / results));
     });
 
+    useEffect(() => {
+
+        setPage(0);
+
+        if(document.getElementById(0)){
+
+            buttonRef = document.querySelector('.btn--active');
+            if (buttonRef)
+                buttonRef.classList.remove('btn--active');
+
+            buttonRef = document.getElementById(0);
+            buttonRef.classList.add('btn--active');
+        }
+
+    }, [totalPages])
+
     // useEffect(() => {
     //
     //     if(!document.querySelector('.btn--active') && document.getElementById('0')) {
