@@ -94,3 +94,18 @@
     margin-bottom: 2rem;
     font-weight: 500;
 }
+
+.btn--outline {
+    padding: 1rem;
+    /*border: none;*/
+    border: solid 1px #ccc;
+    background-color: white;
+    color: teal;
+    font-weight: 600;
+}
+
+.btn--active {
+    background-color: teal;
+    border: solid 1px teal !important;
+    color: white;
+}
