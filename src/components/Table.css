@@ -50,4 +50,16 @@ thead {
 .table-footer {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+}
+
+.table-footer--buttons {
+    display: flex;
+    gap: .5rem;
+}
+
+.table-footer--right {
+    /*text-align: right;*/
+    display: flex;
+    gap: .5rem;
 }

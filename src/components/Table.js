@@ -8,7 +8,7 @@ function Table({data, config, keyFn, results}) {
     const [totalPages, setTotalPages] = useState(0);
     const [page, setPage] = useState(0);
 
-    if(!results)
+    if (!results)
         results = 15;
 
     useEffect(() => {
@@ -31,8 +31,19 @@ function Table({data, config, keyFn, results}) {
         toTicketPage(`/tickets/${id}`);
     }
 
-    function handleSetPageOnClick(pageNumber){
+    function handleSetPageOnClick(pageNumber) {
         setPage(pageNumber);
+    }
+
+    function nextButton(){
+        console.log(page, totalPages);
+        if((page + 1) < totalPages)
+            setPage(page => page + 1);
+    }
+    function previousButton(){
+        console.log(page, totalPages);
+        if((page + 1) > 1)
+            setPage(page => page - 1);
     }
 
     function renderNumberOfPageButtons() {
@@ -40,7 +51,7 @@ function Table({data, config, keyFn, results}) {
         const pageButtons = [];
 
         for (let page = 0; page < totalPages; page++) {
-            pageButtons.push(<button onClick={e => handleSetPageOnClick(page)}>{page + 1}</button>)
+            pageButtons.push(<button key={page} className={"btn"} onClick={e => handleSetPageOnClick(page)}>{page + 1}</button>)
         }
         return pageButtons;
     }
@@ -74,9 +85,12 @@ function Table({data, config, keyFn, results}) {
                 </tbody>
             </table>
             <div className={'table-footer'}>
-                <p>Showing Results: {renderedData().length} / {data.length}</p>
-                <p>Total Pages: {totalPages}</p>
-                <p>{renderNumberOfPageButtons()}</p>
+                <p>Showing {data.length < 1 ? 0 : 1 + (results * page)} to {renderedData().length + (results * page)} of {data.length} entries.</p>
+                <div className="table-footer--right">
+                    <button onClick={previousButton} className={"btn"}>Previous</button>
+                    <div className={"table-footer--buttons"}>{renderNumberOfPageButtons()}</div>
+                    <button onClick={nextButton} className={"btn"}>Next</button>
+                </div>
             </div>
         </>
     );

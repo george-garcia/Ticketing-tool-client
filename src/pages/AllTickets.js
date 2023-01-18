@@ -20,7 +20,7 @@ function AllTickets(){
             label: 'Status',
         },];
 
-        const renderedTable = <Table data={ticketData.tickets} config={config}/>;
+        const renderedTable = <Table data={ticketData.tickets} config={config} results={15}/>;
 
 
     return (
