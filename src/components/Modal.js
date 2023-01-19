@@ -19,7 +19,7 @@ function Modal({onClose, children, actionBar}) {
             <div onClick={onClose} className="modal-background">
             </div>
             <div className="modal-box">
-                <div className="flex flex-col justify-between h-full">
+                <div className="">
                     {children}
                     <div className="modal-actionbar">{actionBar}</div>
                 </div>

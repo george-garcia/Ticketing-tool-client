@@ -68,7 +68,7 @@ const DashboardPage = () => {
         return ticket.assigned === userId && ticket.status !== 'Resolved';
     });
 
-    renderedTable = <Table data={myTicketData} config={config}/>;
+    renderedTable = <Table data={myTicketData} config={config} results={5}/>;
 
     if (isLoading || !ticketData)
         return;

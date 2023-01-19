@@ -1,0 +1,27 @@
+.modal-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #999999;
+    opacity: .8;
+    font-size: 50rem;
+}
+
+.modal-box {
+    position: fixed;
+    top: 30rem;
+    left: 40rem;
+    right: 40rem;
+    /*bottom: 40rem;*/
+    padding: 5rem 10rem;
+    /*background-image: linear-gradient(to right, var(--primary-color-400), var(--dark-color-900));*/
+    background-color: white;
+    border-radius: 2px;
+}
+
+.modal-actionbar {
+    display: flex;
+    justify-content: end;
+}

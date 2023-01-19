@@ -42,3 +42,12 @@
     box-shadow: var(--box-shadow);
     color: var(--secondary-color-700);
 }
+
+.newTicket-modal--heading {
+margin-bottom: 2rem;
+}
+
+.newTicket-modal--text {
+    margin-bottom: 1rem;
+    font-size: 1.8rem;
+}
