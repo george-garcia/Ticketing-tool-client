@@ -58,9 +58,7 @@ function NewTicketPage() {
             title,
             description,
             impact: impact.value
-        });
-
-        console.log(result);
+        }).unwrap();
 
 
 

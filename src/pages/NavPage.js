@@ -12,12 +12,15 @@ import {
 } from "react-icons/hi2";
 import {useFetchOneUserQuery} from "../store";
 import jwtDecode from "jwt-decode";
+import logo from '../public/LOGO-HDH.png'
 
 const NavPage = ({children}) => {
     let currentRef = useRef();
 
-    const {userId} = jwtDecode(localStorage.getItem('token').split(' ')[1]);
+    const {userId, name} = jwtDecode(localStorage.getItem('token').split(' ')[1]);
     const {data, isLoading} = useFetchOneUserQuery(userId);
+    const userData = jwtDecode(localStorage.getItem('token').split(' ')[1]);
+
 
     // console.log(currentRef);
 
@@ -41,10 +44,14 @@ const NavPage = ({children}) => {
     return (
         <div className="section-nav">
             <div className="nav-top">
-                <div>
+                <div className={"nav-top--left"}>
+                    {/*<Logo />*/}
+                    {/*<logo className={"nav-top--logo"} src={logo} alt=""/>*/}
+                    <img className={"nav-top--logo"} src={logo} alt=""/>
                     <h4>Help Desk Hero</h4>
                 </div>
                 <div className={"nav-top--right"}>
+                    <p className={"nav-top--name"}>{name}</p>
                     <img className={"nav-avatar"} src={avatar} alt=""/>
                 </div>
 

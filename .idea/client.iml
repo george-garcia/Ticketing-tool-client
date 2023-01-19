@@ -10,5 +10,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="comps" />
     <orderEntry type="module" module-name="server" />
+    <orderEntry type="module" module-name="tech-website-cluster" />
   </component>
 </module>
