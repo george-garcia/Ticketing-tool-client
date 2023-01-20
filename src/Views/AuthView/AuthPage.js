@@ -2,6 +2,7 @@ import {useRef, useState} from "react";
 import LoginPage from "./LoginPage";
 import RegisterPage from "./RegisterPage";
 import './AuthPage.css';
+import { IoPersonAddSharp, IoPersonCircleSharp } from "react-icons/io5";
 
 const AuthPage = () => {
     const [getAuthView, setAuthView] = useState('login');
@@ -27,13 +28,21 @@ const AuthPage = () => {
     }
 
     return (
-        <div className="auth-container">
-            <div className="auth-selector">
-                <div ref={loginRef} onClick={loginClick} className="auth-selector--login auth-selector--active">Login
+        <div className="auth-page">
+            <div className="auth-container">
+                <div className="auth-selector">
+                    <div ref={loginRef} onClick={loginClick}
+                         className="auth-selector--login auth-selector--active">
+                        <IoPersonCircleSharp/>
+                        <h2>Login</h2>
+                    </div>
+                    <div ref={registerRef} onClick={registerClick} className="auth-selector--register">
+                        <IoPersonAddSharp/>
+                        <h2>Register</h2>
+                    </div>
                 </div>
-                <div ref={registerRef} onClick={registerClick} className="auth-selector--register">Register</div>
+                {(getAuthView === 'login') ? <LoginPage/> : <RegisterPage/>}
             </div>
-            {(getAuthView === 'login') ? <LoginPage/> : <RegisterPage/>}
         </div>
     );
 }

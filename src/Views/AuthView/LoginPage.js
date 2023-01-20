@@ -36,13 +36,13 @@ const LoginPage = () => {
     }
 
     return (
-        <form className="auth-form" onSubmit={onSubmit}>
+        <form className="auth-form gap-1" onSubmit={onSubmit}>
             <h2 className="auth-header">Login Here</h2>
             <input onChange={(e) => setEmail(e.target.value)}
-                   value={email} type="text" placeholder="email" className="login-email"/>
+                   value={email} type="text" placeholder="Email" className=""/>
 
             <input onChange={(e) => setPassword(e.target.value)}
-                   value={password} type="password" placeholder="password" className="login-password"/>
+                   value={password} type="password" placeholder="Password" className="auth--password"/>
             <button className="btn-login btn">Login</button>
             {errorMsg ? <h6>{errorMsg}</h6> : null}
             {!errorMsg && isSuccess ? <h1>Loading dashboard...</h1> : null}

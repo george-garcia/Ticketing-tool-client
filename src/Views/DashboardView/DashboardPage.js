@@ -193,25 +193,25 @@ const DashboardPage = () => {
                 <Panel className={"dashboard-notifications--my"} children={
                     <>
                         <h3>My Tickets</h3>
-                        <h1>{myTickets}</h1>
+                        <h1 className={"dashboard-notifications--numbers-red"}>{myTickets}</h1>
                     </>
                 }/>
                 <Panel className={"dashboard-notifications--open"} children={
                     <>
                         <h3>All Open </h3>
-                        <h1>{renderOpenTickets()}</h1>
+                        <h1 className={"dashboard-notifications--numbers"}>{renderOpenTickets()}</h1>
                     </>
                 }/>
                 <Panel className={"dashboard-notifications--overdue"} children={
                     <>
                         <h3>Overdue</h3>
-                        <h1>{overdueTickets}</h1>
+                        <h1 className={"dashboard-notifications--numbers-red"}>{overdueTickets}</h1>
                     </>
                 }/>
                 <Panel className={"dashboard-notifications--unassigned"} children={
                     <>
                         <h3>Unassigned</h3>
-                        <h1>{open}</h1>
+                        <h1 className={"dashboard-notifications--numbers"}>{open}</h1>
                     </>
                 }/>
                 <Panel className={"pie-container--status"} children={

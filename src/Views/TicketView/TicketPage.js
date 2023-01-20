@@ -73,7 +73,7 @@ const TicketPage = () => {
         }
 
 
-        function addNewComment() {
+        async function addNewComment() {
             if (newComment) {
                 //this should create an object comment with comment.ticketId and comment.body values
                 //then call the mutation with this object
@@ -83,7 +83,7 @@ const TicketPage = () => {
                         comments: newComment
                     }
                 };
-                updateComment(comment).unwrap();
+                await updateComment(comment).unwrap();
                 setNewComment('');
             }
         }

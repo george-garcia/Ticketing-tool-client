@@ -2,6 +2,7 @@ import './PropertiesPage.css';
 import {useFetchUsersQuery, useFetchOneTicketQuery, useUpdateTicketMutation} from "../../store";
 import {useEffect, useState} from "react";
 import Dropdown from "../../components/Dropdown";
+import Modal from "../../components/Modal";
 
 function PropertiesPage({ticketId}) {
     //load our ticket and users
@@ -24,6 +25,8 @@ function PropertiesPage({ticketId}) {
 
     //input
     const [contactDropdown, setContactDropdown] = useState('');
+    const [showModal, setShowModal] = useState(false);
+
 
     // const {customerData} = useFetchOneUserQuery(data.ticket.createdBy);
 
@@ -156,11 +159,11 @@ function PropertiesPage({ticketId}) {
             const lastName = user.lastName[0].toUpperCase() + user.lastName.slice(1);
             const fullName = `${firstName} ${lastName}`;
 
-                return {
-                    value: fullName,
-                    id: user._id,
-                }
-            });
+            return {
+                value: fullName,
+                id: user._id,
+            }
+        });
 
         const noneAssigned = {
             value: 'None',
@@ -169,52 +172,65 @@ function PropertiesPage({ticketId}) {
 
         usersArr.push(noneAssigned);
 
-        return <Dropdown options={usersArr} current={assignedDropdown} handleSelectionState={setAssignedDropdown} />
+        return <Dropdown options={usersArr} current={assignedDropdown} handleSelectionState={setAssignedDropdown}/>
     }
 
-    function saveChanges(){
+    const handleClose = () => {
+        setShowModal(false);
+    };
 
-        if(!usersData?.users || !ticketData.ticket)
+    const actionBar = <div>
+        <button className="btn" onClick={handleClose}>Close</button>
+    </div>;
+
+    const modal = <Modal onClose={handleClose} actionBar={actionBar}>
+        {/*<p className="contact-modal--miniheading"></p>*/}
+        <h2 className="newTicket-modal--heading">Changes Saved! </h2>
+    </Modal>;
+
+    function saveChanges() {
+
+        if (!usersData?.users || !ticketData.ticket)
             return;
 
         const queryObject = {};
 
         //status dropdown
-        if(statusDropdown.value !== ticket.status)
+        if (statusDropdown.value !== ticket.status)
             queryObject.status = statusDropdown.value
 
         //priority
-        if(priorityDropdown.value !== ticket.priority)
+        if (priorityDropdown.value !== ticket.priority)
             queryObject.priority = priorityDropdown.value
 
         //impact
-        if(impactDropdown.value !== ticket.impact)
+        if (impactDropdown.value !== ticket.impact)
             queryObject.impact = impactDropdown.value
 
         //category
-        if(categoryDropdown.value !== ticket.category)
+        if (categoryDropdown.value !== ticket.category)
             queryObject.category = categoryDropdown.value
 
         //product
-        if(productDropdown.value !== ticket.product)
+        if (productDropdown.value !== ticket.product)
             queryObject.product = productDropdown.value
 
         //contact
-        if(contactDropdown)
+        if (contactDropdown)
             queryObject.contact = contactDropdown;
 
         //assigned
         //check if the ticket is attempting to assign
-        if(assignedDropdown?.value){
+        if (assignedDropdown?.value) {
             //check if the attempt to assign is different from what the ticket has assigned to it
-            if(assignedDropdown.id !== ticket.assigned){
+            if (assignedDropdown.id !== ticket.assigned) {
                 //if different then put the new assigned on the query object
                 queryObject.assigned = assignedDropdown.id;
             }
         }
 
         // if no changes where made we should not make a request with an empty object and instead return
-        if(Object.keys(queryObject).length === 0)
+        if (Object.keys(queryObject).length === 0)
             return;
 
         //put the ticketId on the query object
@@ -223,9 +239,8 @@ function PropertiesPage({ticketId}) {
         // //dispatch our query object with the updateTicket mutation
         updateTicket(queryObject).unwrap();
 
-        //assigned
-
-
+        //show confirmation modal
+        setShowModal(true);
 
     }
 
@@ -257,7 +272,7 @@ function PropertiesPage({ticketId}) {
             <div className="ticket-properties--footer">
                 <button onClick={saveChanges} className="btn ticket-properties--btn">Save Changes</button>
             </div>
-
+            {showModal && modal}
         </div>
     );
 }

@@ -53,16 +53,46 @@
 }
 
 .dashboard-notifications--my {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    /*align-content: space-around;*/
 }
+
+.dashboard-notifications--numbers-red {
+    font-size: 8rem;
+    color: red;
+}
+
 .dashboard-notifications--open {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
 }
+
+.dashboard-notifications--numbers {
+    font-size: 8rem;
+}
+
 .dashboard-notifications--overdue {
     grid-column: 1 / 2;
     grid-row: 2 / 3;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
 }
 .dashboard-notifications--unassigned {
     grid-column: 2 / 3;
     grid-row: 2 / 3;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
 }
 
 
