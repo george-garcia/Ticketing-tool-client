@@ -9,6 +9,7 @@ function PropertiesPage({ticketId}) {
     const {data: usersData, isLoading: usersIsLoading} = useFetchUsersQuery();
     const [updateTicket, ticketResults] = useUpdateTicketMutation();
 
+
     //set our ticket and customer objects into state
     const [ticket, setTicket] = useState({});
     const [customer, setCustomer] = useState({});

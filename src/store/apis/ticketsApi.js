@@ -20,7 +20,7 @@ const ticketsApi = createApi({
         return {
             updateTicket: builder.mutation({
                 invalidatesTags: (result, error, ticket) => {
-                    return [{ type: 'tickets', id: ticket.ticketId}]
+                    return [{ type: 'tickets', id: ticket.ticketId}, 'tickets']
                 },
                 query(arg) {
                     return {
