@@ -31,9 +31,12 @@
 }
 
 .ticket-description-section {
+    display: flex;
+    flex-direction: column;
     color: black;
     min-width: 90rem;
     /*height: 100%;*/
+    flex-shrink: 1;
 }
 
 .ticket-comments-section {
@@ -70,7 +73,9 @@
     resize: none;
     width: 100%;
     border: none;
-    min-height: 7.2rem;
+    min-height: 10rem;
+    /*min-height: 100%;*/
+    /*min-height: 100%;*/
     font-family: inherit;
 }
 
@@ -80,7 +85,9 @@
 .ticket-comments--input {
     /*border: transparent;*/
     width: 100%;
+    min-height: 8.2rem;
     font-family: inherit;
+    resize: none;
 }
 
 .newComment-container {

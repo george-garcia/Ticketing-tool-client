@@ -39,8 +39,6 @@ function AssignedPage({ ticketId }) {
         }
     }, [ticket, usersData]);
 
-    console.log(assigned);
-
 
 
     function renderAssignedInfo(){

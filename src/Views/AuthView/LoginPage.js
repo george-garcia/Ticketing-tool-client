@@ -24,7 +24,7 @@ const LoginPage = () => {
     const onSubmit = async (e) => {
         e.preventDefault();
         try {
-            const userData = await login({email, password}).unwrap();
+            const userData = await login({email: email, password}).unwrap();
 
             if(userData?.token){
                 localStorage.setItem('token', `Bearer ${userData.token}`);
@@ -44,7 +44,7 @@ const LoginPage = () => {
             <input onChange={(e) => setPassword(e.target.value)}
                    value={password} type="password" placeholder="Password" className="auth--password"/>
             <button className="btn-login btn">Login</button>
-            {errorMsg ? <h6>{errorMsg}</h6> : null}
+            {errorMsg ? <h6 className={"login-page--error"}>{errorMsg}</h6> : null}
             {!errorMsg && isSuccess ? <h1>Loading dashboard...</h1> : null}
             {loginSuccess && <Navigate to={"/dashboard"} state={{from: location}}/>}
         </form>

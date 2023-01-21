@@ -32,7 +32,7 @@ const store = configureStore({
 setupListeners(store.dispatch);
 
 export {useFetchUsersQuery, useUpdateUserMutation, useFetchOneUserQuery, useDeleteUserMutation} from './apis/usersApi';
-export {useRegisterUserQuery, useLoginUserMutation} from './apis/authApi';
+export {useRegisterUserMutation, useLoginUserMutation} from './apis/authApi';
 export {useCreateTicketMutation, useDeleteTicketMutation, useFetchOneTicketQuery, useFetchTicketsQuery, useUpdateTicketMutation, useAddNewCommentMutation} from './apis/ticketsApi';
 
 

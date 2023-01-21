@@ -62,7 +62,7 @@
 
 .dashboard-notifications--numbers-red {
     font-size: 8rem;
-    color: red;
+    color: var(--secondary-color-600);
 }
 
 .dashboard-notifications--open {

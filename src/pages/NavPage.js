@@ -17,9 +17,16 @@ import logo from '../public/LOGO-HDH.png'
 const NavPage = ({children}) => {
     let currentRef = useRef();
 
-    const {userId, name} = jwtDecode(localStorage.getItem('token').split(' ')[1]);
+    let {userId, name} = jwtDecode(localStorage.getItem('token').split(' ')[1]);
     const {data, isLoading} = useFetchOneUserQuery(userId);
     const userData = jwtDecode(localStorage.getItem('token').split(' ')[1]);
+
+    let firstName = name.split(" ")[0];
+    firstName = firstName[0].toUpperCase() + firstName.slice(1);
+    let lastName = name.split(" ")[1];
+    lastName = lastName[0].toUpperCase() + lastName.slice(1);
+
+    name = `${firstName} ${lastName}`;
 
 
     // console.log(currentRef);
@@ -35,7 +42,6 @@ const NavPage = ({children}) => {
     if (!data || isLoading)
         return;
 
-    // console.log(data);
 
     const {picture: avatar} = data.user;
 
