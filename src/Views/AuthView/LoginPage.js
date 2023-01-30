@@ -1,5 +1,5 @@
 import {useLoginUserMutation} from "../../store";
-import {useState, useEffect} from "react";
+import {useState, useEffect, useRef} from "react";
 import {Navigate, useLocation} from "react-router-dom";
 import './AuthPage.css';
 
@@ -7,13 +7,17 @@ const LoginPage = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errorMsg, setErrorMsg] = useState('');
-    const [login, {isLoading, isSuccess}] =  useLoginUserMutation();
+    const [login, {isLoading, isSuccess}] = useLoginUserMutation();
     const location = useLocation();
     const [loginSuccess, setLoginSuccess] = useState(false);
 
+    const emailRef = useRef();
+    const passwordRef = useRef();
+
+
     useEffect(() => {
         setErrorMsg("");
-    },[email, password]);
+    }, [email, password]);
 
 
     //This is using the AuthPage.css file
@@ -26,22 +30,29 @@ const LoginPage = () => {
         try {
             const userData = await login({email: email, password}).unwrap();
 
-            if(userData?.token){
+            if (userData?.token) {
                 localStorage.setItem('token', `Bearer ${userData.token}`);
                 setLoginSuccess(true);
-                }
+            }
         } catch (e) {
             setErrorMsg(e.data.msg);
         }
     }
 
+    function onRecruiterLogin(){
+        setEmail('recruiter@gmail.com');
+        setPassword('recruiter');
+
+    }
+
     return (
         <form className="auth-form gap-1" onSubmit={onSubmit}>
+            <button onClick={onRecruiterLogin} className={"recruiter-btn"}>Recruiter Login</button>
             <h2 className="auth-header">Login Here</h2>
-            <input onChange={(e) => setEmail(e.target.value)}
+            <input ref={emailRef} onChange={(e) => setEmail(e.target.value)}
                    value={email} type="text" placeholder="Email" className=""/>
 
-            <input onChange={(e) => setPassword(e.target.value)}
+            <input ref={passwordRef} onChange={(e) => setPassword(e.target.value)}
                    value={password} type="password" placeholder="Password" className="auth--password"/>
             <button className="btn-login btn">Login</button>
             {errorMsg ? <h6 className={"login-page--error"}>{errorMsg}</h6> : null}

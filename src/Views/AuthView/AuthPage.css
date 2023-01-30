@@ -83,6 +83,17 @@
     gap: 1rem;
 }
 
+.recruiter-btn {
+    position: absolute;
+    background-color: var(--secondary-color-500);
+    border: none;
+    padding: .5rem 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transform: translateX(65rem);
+
+}
+
 .auth-header {
     align-self: center;
     /*margin-bottom: 1rem;*/
