@@ -100,7 +100,7 @@ const RegisterPage = () => {
             {emailErrorMsg ? <h6 className={"register-page--error"}>{emailErrorMsg}</h6> : null}
 
 
-            <input type="password" placeholder="Password" className={""}
+            <input type="password" placeholder="Password" className={"mb-1--2"}
                    value={password} onChange={e => setPassword(e.target.value)}/>
             {passwordErrorMsg ? <h6 className={"register-page--error"}>{passwordErrorMsg}</h6> : null}
 

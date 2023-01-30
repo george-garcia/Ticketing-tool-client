@@ -132,3 +132,11 @@
     background-color: var(--primary-color-500);
     transition: all 400ms;
 }
+
+.mb-1--2 {
+    margin-bottom: 1.5rem;
+}
+
+.mb-2 {
+    margin-bottom: 2rem;
+}
