@@ -100,6 +100,12 @@ const TicketPage = () => {
             return fullName;
         }
 
+        let date = new Date();
+
+        if(ticket?.createdAt){
+            const seconds = Date.parse(ticket.createdAt);
+            date = new Date(seconds);
+        }
 
 
         return (
@@ -114,7 +120,7 @@ const TicketPage = () => {
                                            className="ticket-title--input"></input>
                                     <div className="ticket-container--time">
                                         <p><span>{renderCustomerFullName()}</span> reported an issue</p>
-                                        <p>4 hours ago</p>
+                                        <p>{date.toLocaleString()}</p>
                                     </div>
                                 </div>
 
