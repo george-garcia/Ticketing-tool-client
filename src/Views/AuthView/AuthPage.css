@@ -101,7 +101,7 @@
     padding: 1rem;
 }
 
-input:focus {
+.auth-page input:focus {
     outline: none;
     border-bottom: 1px solid var(--primary-color-400);
 }

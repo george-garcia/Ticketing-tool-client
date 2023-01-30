@@ -77,6 +77,7 @@
     /*min-height: 100%;*/
     /*min-height: 100%;*/
     font-family: inherit;
+    font-size: 1.8rem;
 }
 
 .ticket-comments {
@@ -88,6 +89,8 @@
     min-height: 8.2rem;
     font-family: inherit;
     resize: none;
+    font-size: 1.8rem;
+    padding: 5px;
 }
 
 .newComment-container {
