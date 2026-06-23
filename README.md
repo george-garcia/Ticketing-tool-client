@@ -1,49 +1,41 @@
-# Help Desk Hero - Front End
+# Help Desk Hero — Client
 
-![Help Desk Hero Demo](https://raw.githubusercontent.com/george-garcia/Portfolio/master/src/public/HelpDeskHerogif.gif)
+Agent console for the Help Desk Hero IT ticketing system. Rebuilt from Create React App to
+**Vite + React + TypeScript** with a Zendesk/ServiceNow-style UI.
 
-Help Desk Hero is a full-stack IT ticketing system focused on providing an intuitive interface for users to create and track support tickets, and for technicians to manage and resolve them.
+## Stack
 
----
+- Vite + React 18 + TypeScript
+- Redux Toolkit + **RTK Query** (data layer)
+- Tailwind CSS (custom components, `cn()` helper)
+- **Recharts** (dashboard: status bar, priority donut, 14-day trend)
+- AWS **Cognito** via Amplify (auth) with a local **dev seam**
+- react-router-dom v6 with an auth route guard
 
-## Features
+## Run
 
-- User authentication with JSON Web Tokens (JWT)
-- Dashboard with ticket overviews and stats
-- Real-time updates and ticket management
-- Responsive UI built with React and Redux Toolkit
-- Interactive charts with Nivo/Pie
+```bash
+cp .env.example .env     # set VITE_API_URL; VITE_AUTH_MODE=dev for local
+npm install
+npm run dev              # http://localhost:5173
+```
 
----
+Requires the API (see `../Ticketing-tool-server`). In **dev** mode, sign in with any email — the
+server's `/auth/dev-login` seam issues a token (agent role) so the whole console is usable without AWS.
 
-## Technologies Used
+## Structure
 
-- React
-- Redux Toolkit
-- React Router
-- JavaScript (ES6+)
-- CSS3
-- Nivo/Pie Charts
-- JSON Web Tokens for authentication
+```
+src/
+  components/    ui/ primitives, layout/ (sidebar + topbar), PageHeader, States
+  features/
+    auth/        login / register, RequireAuth guard, auth actions
+    tickets/     list / detail / new pages + presentational components + saved views
+    dashboard/   useTicketStats hook + pure aggregation (ticket-stats.ts) + charts
+    search/
+  store/         RTK Query: baseApi (+ token + envelope unwrap), tickets/users endpoints
+  lib/           authClient (dev/cognito), formatting, user + ticket metadata
+```
 
----
-
-## Live Demo
-
-Visit the live frontend application here:  
-[Help Desk Hero Frontend](http://helpdeskhero.georgegarciadev.com)
-
----
-
-## Repository
-
-[GitHub Repo](https://github.com/george-garcia/Ticketing-tool-client)
-
----
-
-## Getting Started
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/george-garcia/Ticketing-tool-client.git
-   ```
+Container components (pages) own data + state; presentational components take props only. Dashboard
+math lives in `features/dashboard/ticket-stats.ts` (pure, testable), not in the view.
