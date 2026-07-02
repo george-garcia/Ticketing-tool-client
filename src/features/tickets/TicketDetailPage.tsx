@@ -17,6 +17,7 @@ import { Button } from '../../components/ui/Button'
 import { LoadingState, ErrorState } from '../../components/States'
 import { formatDateTime } from '../../lib/format'
 import { userName } from '../../lib/user'
+import { slaStatus, SLA_BADGE } from '../../lib/sla'
 import type { UpdateTicketInput } from '../../types'
 
 export default function TicketDetailPage() {
@@ -38,7 +39,9 @@ export default function TicketDetailPage() {
   if (isLoading) return <LoadingState />
   if (isError || !ticket) return <ErrorState message="Ticket not found." />
 
-  const canDelete = me?.role === 'agent' || me?.role === 'admin'
+  // Requesters ('user') can read a ticket and comment, but not reassign or change its state.
+  const canManage = me?.role === 'agent' || me?.role === 'admin'
+  const canDelete = canManage
 
   const handleChange = (changes: UpdateTicketInput) => {
     updateTicket({ id: ticket.id, changes })
@@ -66,7 +69,16 @@ export default function TicketDetailPage() {
                 <p className="font-mono text-xs text-slate-400">#{ticket.id}</p>
                 <h1 className="mt-1 text-xl font-bold text-slate-900">{ticket.title}</h1>
               </div>
-              <div className="flex shrink-0 gap-2">
+              <div className="flex shrink-0 flex-wrap justify-end gap-2">
+                {(() => {
+                  const sla = slaStatus(ticket)
+                  if (sla.state === 'met') return null
+                  return (
+                    <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${SLA_BADGE[sla.state]}`}>
+                      {sla.label}
+                    </span>
+                  )
+                })()}
                 <PriorityBadge priority={ticket.priority} />
                 <StatusBadge status={ticket.status} />
               </div>
@@ -76,7 +88,7 @@ export default function TicketDetailPage() {
 
           <Card className="p-6">
             <h2 className="mb-4 text-sm font-semibold text-slate-900">Activity</h2>
-            <ActivityTimeline comments={ticket.comments ?? []} />
+            <ActivityTimeline comments={ticket.comments ?? []} events={ticket.events ?? []} />
             <div className="mt-6 border-t border-slate-100 pt-5">
               <CommentComposer onSubmit={handleComment} isSubmitting={isCommenting} />
             </div>
@@ -88,7 +100,8 @@ export default function TicketDetailPage() {
             ticket={ticket}
             users={users ?? []}
             onChange={handleChange}
-            disabled={isUpdating}
+            disabled={isUpdating || !canManage}
+            readOnly={!canManage}
           />
           <Card className="space-y-3 p-5 text-sm">
             <h3 className="text-sm font-semibold text-slate-900">Details</h3>

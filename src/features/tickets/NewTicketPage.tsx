@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useCreateTicketMutation } from '../../store/ticketsApi'
 import { useGetUsersQuery } from '../../store/usersApi'
 import { TICKET_PRIORITIES, TICKET_IMPACTS, TICKET_CATEGORIES } from '../../lib/ticket-meta'
+import { TICKET_TEMPLATES } from './templates'
 import { userName } from '../../lib/user'
 import { PageHeader } from '../../components/PageHeader'
 import { Card } from '../../components/ui/Card'
@@ -17,6 +18,7 @@ export default function NewTicketPage() {
   const { data: users } = useGetUsersQuery()
   const [createTicket, { isLoading }] = useCreateTicketMutation()
   const [error, setError] = useState('')
+  const [templateId, setTemplateId] = useState<string | null>(null)
   const [form, setForm] = useState<CreateTicketInput>({
     title: '',
     description: '',
@@ -27,6 +29,13 @@ export default function NewTicketPage() {
 
   const set = <K extends keyof CreateTicketInput>(key: K, value: CreateTicketInput[K]) =>
     setForm((f) => ({ ...f, [key]: value }))
+
+  const applyTemplate = (id: string) => {
+    const t = TICKET_TEMPLATES.find((x) => x.id === id)
+    if (!t) return
+    setTemplateId(id)
+    setForm((f) => ({ ...f, ...t.values }))
+  }
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
@@ -43,6 +52,27 @@ export default function NewTicketPage() {
     <div className="mx-auto max-w-3xl">
       <PageHeader title="New ticket" subtitle="Open a new incident or request" />
       <Card className="p-6">
+        <div className="mb-6">
+          <label className="label">Start from a template</label>
+          <div className="mt-1 flex flex-wrap gap-2">
+            {TICKET_TEMPLATES.map((t) => (
+              <button
+                key={t.id}
+                type="button"
+                onClick={() => applyTemplate(t.id)}
+                className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-sm transition ${
+                  templateId === t.id
+                    ? 'border-brand-500 bg-brand-50 text-brand-700'
+                    : 'border-slate-200 text-slate-600 hover:border-slate-300 hover:bg-slate-50'
+                }`}
+              >
+                <span>{t.emoji}</span>
+                {t.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
         <form onSubmit={handleSubmit} className="space-y-5">
           <div>
             <label className="label">Subject</label>

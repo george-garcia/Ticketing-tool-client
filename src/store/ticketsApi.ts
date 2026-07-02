@@ -41,6 +41,16 @@ export const ticketsApi = api.injectEndpoints({
       query: (id) => ({ url: `/tickets/${id}`, method: 'DELETE' }),
       invalidatesTags: [{ type: 'Tickets', id: 'LIST' }],
     }),
+
+    bulkUpdateTickets: builder.mutation<{ updated: number }, { ids: number[]; changes: UpdateTicketInput }>({
+      query: (body) => ({ url: '/tickets/bulk', method: 'POST', body }),
+      invalidatesTags: [{ type: 'Tickets', id: 'LIST' }],
+    }),
+
+    bulkDeleteTickets: builder.mutation<{ deleted: number }, { ids: number[] }>({
+      query: (body) => ({ url: '/tickets/bulk-delete', method: 'POST', body }),
+      invalidatesTags: [{ type: 'Tickets', id: 'LIST' }],
+    }),
   }),
 })
 
@@ -51,4 +61,6 @@ export const {
   useUpdateTicketMutation,
   useAddCommentMutation,
   useDeleteTicketMutation,
+  useBulkUpdateTicketsMutation,
+  useBulkDeleteTicketsMutation,
 } = ticketsApi

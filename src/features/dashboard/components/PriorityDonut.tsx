@@ -2,7 +2,13 @@ import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip, Legend } from 'recha
 import { PRIORITY_COLOR } from '../../../lib/ticket-meta'
 import type { TicketPriority } from '../../../types'
 
-export function PriorityDonut({ data }: { data: { priority: TicketPriority; count: number }[] }) {
+interface Props {
+  data: { priority: TicketPriority; count: number }[]
+  onSelect?: (priority: TicketPriority) => void
+  active?: TicketPriority | null
+}
+
+export function PriorityDonut({ data, onSelect, active }: Props) {
   const filtered = data.filter((d) => d.count > 0)
 
   if (filtered.length === 0) {
@@ -19,9 +25,15 @@ export function PriorityDonut({ data }: { data: { priority: TicketPriority; coun
           innerRadius={60}
           outerRadius={90}
           paddingAngle={2}
+          onClick={onSelect ? (d: { priority: TicketPriority }) => onSelect(d.priority) : undefined}
+          className={onSelect ? 'cursor-pointer' : undefined}
         >
           {filtered.map((d) => (
-            <Cell key={d.priority} fill={PRIORITY_COLOR[d.priority]} />
+            <Cell
+              key={d.priority}
+              fill={PRIORITY_COLOR[d.priority]}
+              fillOpacity={active && active !== d.priority ? 0.35 : 1}
+            />
           ))}
         </Pie>
         <Tooltip />

@@ -14,13 +14,20 @@ interface Props {
   users: User[]
   onChange: (changes: UpdateTicketInput) => void
   disabled?: boolean
+  /** When true, the panel is shown read-only (requester view) with an explanatory note. */
+  readOnly?: boolean
 }
 
 /** Editable ticket properties. Emits changes to the parent (container) on each edit. */
-export function PropertiesPanel({ ticket, users, onChange, disabled }: Props) {
+export function PropertiesPanel({ ticket, users, onChange, disabled, readOnly }: Props) {
   return (
     <div className="card space-y-4 p-5">
       <h3 className="text-sm font-semibold text-slate-900">Properties</h3>
+      {readOnly && (
+        <p className="rounded-lg bg-slate-50 px-3 py-2 text-xs text-slate-500">
+          Read-only. Only agents and admins can change these.
+        </p>
+      )}
 
       <Field label="Status">
         <Select

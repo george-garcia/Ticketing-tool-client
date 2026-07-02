@@ -25,6 +25,18 @@ export interface Comment {
   author?: User
 }
 
+/** An entry in a ticket's changelog (status/priority/assignee change, or the creation marker). */
+export interface TicketEvent {
+  id: number
+  ticketId: number
+  actorId: number | null
+  field: 'created' | 'status' | 'priority' | 'impact' | 'category' | 'assignee' | string
+  fromValue: string | null
+  toValue: string | null
+  createdAt: string
+  actor?: User | null
+}
+
 export interface Ticket {
   id: number
   title: string
@@ -42,6 +54,7 @@ export interface Ticket {
   createdBy?: User
   assignedTo?: User | null
   comments?: Comment[]
+  events?: TicketEvent[]
 }
 
 export interface CreateTicketInput {

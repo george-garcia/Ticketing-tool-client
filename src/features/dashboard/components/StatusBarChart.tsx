@@ -11,7 +11,13 @@ import {
 import { STATUS_COLOR } from '../../../lib/ticket-meta'
 import type { TicketStatus } from '../../../types'
 
-export function StatusBarChart({ data }: { data: { status: TicketStatus; count: number }[] }) {
+interface Props {
+  data: { status: TicketStatus; count: number }[]
+  onSelect?: (status: TicketStatus) => void
+  active?: TicketStatus | null
+}
+
+export function StatusBarChart({ data, onSelect, active }: Props) {
   return (
     <ResponsiveContainer width="100%" height={260}>
       <BarChart data={data} margin={{ top: 8, right: 8, bottom: 0, left: -16 }}>
@@ -33,9 +39,18 @@ export function StatusBarChart({ data }: { data: { status: TicketStatus; count: 
           axisLine={false}
         />
         <Tooltip cursor={{ fill: '#f1f5f9' }} />
-        <Bar dataKey="count" radius={[4, 4, 0, 0]}>
+        <Bar
+          dataKey="count"
+          radius={[4, 4, 0, 0]}
+          onClick={onSelect ? (d: { status: TicketStatus }) => onSelect(d.status) : undefined}
+          className={onSelect ? 'cursor-pointer' : undefined}
+        >
           {data.map((d) => (
-            <Cell key={d.status} fill={STATUS_COLOR[d.status]} />
+            <Cell
+              key={d.status}
+              fill={STATUS_COLOR[d.status]}
+              fillOpacity={active && active !== d.status ? 0.35 : 1}
+            />
           ))}
         </Bar>
       </BarChart>

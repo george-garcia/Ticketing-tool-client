@@ -12,8 +12,17 @@ const TOKEN_KEY = 'hdh_token'
 /** Premade, low-friction demo account for recruiters (agent role). */
 const DEMO = {
   email: import.meta.env.VITE_DEMO_EMAIL || 'demo@georgegarciadev.com',
-  password: import.meta.env.VITE_DEMO_PASSWORD || 'DemoRecruiter1!',
+  // No hardcoded fallback: in cognito mode a real password must be injected at build
+  // time, otherwise the demo button is hidden (see `demoSignInAvailable`). In dev mode
+  // the server ignores the password entirely.
+  password: import.meta.env.VITE_DEMO_PASSWORD || '',
 }
+
+/**
+ * Whether to surface the "Explore as demo" button. Dev mode ignores the password so it
+ * always works; cognito mode needs a configured VITE_DEMO_PASSWORD to sign in for real.
+ */
+export const demoSignInAvailable = MODE !== 'cognito' || DEMO.password.length > 0
 
 export interface SignInInput {
   email: string
@@ -59,6 +68,7 @@ export const authClient = {
 
   async signInDemo(): Promise<void> {
     if (MODE === 'cognito') {
+      if (!DEMO.password) throw new Error('Demo sign-in is not configured.')
       const { signIn } = await import('aws-amplify/auth')
       const { isSignedIn, nextStep } = await signIn({ username: DEMO.email, password: DEMO.password })
       if (!isSignedIn) {
