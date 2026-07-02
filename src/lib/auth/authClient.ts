@@ -9,9 +9,9 @@ const MODE = import.meta.env.VITE_AUTH_MODE
 const API = import.meta.env.VITE_API_URL
 const TOKEN_KEY = 'hdh_token'
 
-/** Premade, low-friction demo account for recruiters (agent role). */
+/** Premade, low-friction demo account for recruiters (admin, via the ADMIN_EMAILS allowlist). */
 const DEMO = {
-  email: import.meta.env.VITE_DEMO_EMAIL || 'demo@georgegarciadev.com',
+  email: import.meta.env.VITE_DEMO_EMAIL || 'recruiter@demo.com',
   // No hardcoded fallback: in cognito mode a real password must be injected at build
   // time, otherwise the demo button is hidden (see `demoSignInAvailable`). In dev mode
   // the server ignores the password entirely.
@@ -62,7 +62,7 @@ export const authClient = {
       }
       return
     }
-    const token = await devLogin({ email, groups: ['agent'] })
+    const token = await devLogin({ email })
     localStorage.setItem(TOKEN_KEY, token)
   },
 
@@ -76,14 +76,9 @@ export const authClient = {
       }
       return
     }
-    // Admin so the one-click demo shows the full app (admin area + settings) even before
-    // the seed runs. On a seeded DB the role comes from the existing profile either way.
-    const token = await devLogin({
-      email: DEMO.email,
-      firstName: 'Demo',
-      lastName: 'Recruiter',
-      groups: ['admin'],
-    })
+    // The demo email is on the ADMIN_EMAILS allowlist, so this lands as an admin and the
+    // one-click demo shows the full app (admin area + settings).
+    const token = await devLogin({ email: DEMO.email, firstName: 'Demo', lastName: 'Recruiter' })
     localStorage.setItem(TOKEN_KEY, token)
   },
 
@@ -97,7 +92,7 @@ export const authClient = {
       })
       return { needsConfirmation: nextStep.signUpStep === 'CONFIRM_SIGN_UP' }
     }
-    const token = await devLogin({ email, firstName, lastName, groups: ['agent'] })
+    const token = await devLogin({ email, firstName, lastName })
     localStorage.setItem(TOKEN_KEY, token)
     return { needsConfirmation: false }
   },
