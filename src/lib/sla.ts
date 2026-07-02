@@ -1,12 +1,22 @@
 import { differenceInHours } from 'date-fns'
-import type { Ticket, TicketPriority } from '../types'
+import type { AppSettings, Ticket, TicketPriority } from '../types'
 import { OPEN_STATUSES } from './ticket-meta'
 
-/** Target time-to-resolution per priority (hours). Purely client-side; no backend field. */
-export const SLA_HOURS: Record<TicketPriority, number> = {
+export type SlaHours = Record<TicketPriority, number>
+
+/** Fallback targets (hours) used until the server settings load. Admins can change these. */
+export const DEFAULT_SLA_HOURS: SlaHours = {
   Critical: 4,
   Major: 24,
   Minor: 72,
+}
+
+/** Map the server settings row to per-priority hours (or defaults when unavailable). */
+export function slaHoursFromSettings(
+  s?: Pick<AppSettings, 'slaCriticalHours' | 'slaMajorHours' | 'slaMinorHours'> | null,
+): SlaHours {
+  if (!s) return DEFAULT_SLA_HOURS
+  return { Critical: s.slaCriticalHours, Major: s.slaMajorHours, Minor: s.slaMinorHours }
 }
 
 export type SlaState = 'met' | 'on-track' | 'due-soon' | 'breached'
@@ -21,10 +31,14 @@ export interface SlaStatus {
 const MET: SlaStatus = { state: 'met', label: 'Met', hoursLeft: null }
 
 /** Derive SLA standing from a ticket's priority + age. Closed/resolved tickets are considered met. */
-export function slaStatus(ticket: Ticket, now: Date = new Date()): SlaStatus {
+export function slaStatus(
+  ticket: Ticket,
+  hours: SlaHours = DEFAULT_SLA_HOURS,
+  now: Date = new Date(),
+): SlaStatus {
   if (!OPEN_STATUSES.includes(ticket.status)) return MET
 
-  const budget = SLA_HOURS[ticket.priority]
+  const budget = hours[ticket.priority]
   const elapsed = differenceInHours(now, new Date(ticket.createdAt))
   const hoursLeft = budget - elapsed
 

@@ -17,7 +17,8 @@ import { Button } from '../../components/ui/Button'
 import { LoadingState, ErrorState } from '../../components/States'
 import { formatDateTime } from '../../lib/format'
 import { userName } from '../../lib/user'
-import { slaStatus, SLA_BADGE } from '../../lib/sla'
+import { slaStatus, SLA_BADGE, slaHoursFromSettings } from '../../lib/sla'
+import { useGetSettingsQuery } from '../../store/settingsApi'
 import type { UpdateTicketInput } from '../../types'
 
 export default function TicketDetailPage() {
@@ -32,6 +33,7 @@ export default function TicketDetailPage() {
   } = useGetTicketQuery(ticketId, { skip: !Number.isFinite(ticketId) })
   const { data: users } = useGetUsersQuery()
   const { data: me } = useGetMeQuery()
+  const { data: settings } = useGetSettingsQuery()
   const [updateTicket, { isLoading: isUpdating }] = useUpdateTicketMutation()
   const [addComment, { isLoading: isCommenting }] = useAddCommentMutation()
   const [deleteTicket, { isLoading: isDeleting }] = useDeleteTicketMutation()
@@ -71,7 +73,7 @@ export default function TicketDetailPage() {
               </div>
               <div className="flex shrink-0 flex-wrap justify-end gap-2">
                 {(() => {
-                  const sla = slaStatus(ticket)
+                  const sla = slaStatus(ticket, slaHoursFromSettings(settings))
                   if (sla.state === 'met') return null
                   return (
                     <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${SLA_BADGE[sla.state]}`}>

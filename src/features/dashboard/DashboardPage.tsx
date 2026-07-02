@@ -10,20 +10,22 @@ import { TicketsTable } from '../tickets/components/TicketsTable'
 import { PageHeader } from '../../components/PageHeader'
 import { Card } from '../../components/ui/Card'
 import { LoadingState, ErrorState } from '../../components/States'
-import { slaStatus } from '../../lib/sla'
+import { slaStatus, slaHoursFromSettings } from '../../lib/sla'
+import { useGetSettingsQuery } from '../../store/settingsApi'
 import type { TicketPriority, TicketStatus } from '../../types'
 
 export default function DashboardPage() {
   const { stats, tickets, isLoading, isError } = useTicketStats()
+  const { data: settings } = useGetSettingsQuery()
   const [status, setStatus] = useState<TicketStatus | null>(null)
   const [priority, setPriority] = useState<TicketPriority | null>(null)
 
   const hasFilter = status !== null || priority !== null
 
-  const slaBreaches = useMemo(
-    () => tickets.filter((t) => slaStatus(t).state === 'breached').length,
-    [tickets],
-  )
+  const slaBreaches = useMemo(() => {
+    const hours = slaHoursFromSettings(settings)
+    return tickets.filter((t) => slaStatus(t, hours).state === 'breached').length
+  }, [tickets, settings])
 
   // Click a chart segment to filter; click the same segment again to clear it.
   const filtered = useMemo(() => {

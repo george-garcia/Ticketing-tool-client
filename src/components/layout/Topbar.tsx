@@ -20,13 +20,13 @@ export function Topbar() {
       </Link>
 
       <div className="flex items-center gap-4">
-        <div className="flex items-center gap-2.5">
+        <Link to="/profile" className="flex items-center gap-2.5 rounded-lg p-1 transition hover:bg-slate-50" title="My profile">
           <Avatar name={fullName} src={me?.pictureUrl} className="h-9 w-9 text-sm" />
           <div className="hidden text-right sm:block">
             <p className="text-sm font-semibold text-slate-800">{fullName}</p>
             <p className="text-xs capitalize text-slate-500">{me?.role}</p>
           </div>
-        </div>
+        </Link>
         <button
           onClick={signOut}
           className="btn btn-ghost p-2"

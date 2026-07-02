@@ -11,8 +11,25 @@ export interface User {
   firstName: string
   lastName: string
   role: UserRole
+  teamId: number | null
   pictureUrl: string | null
   createdAt: string
+  updatedAt: string
+}
+
+export interface Team {
+  id: number
+  name: string
+  createdAt: string
+  /** Present on the list endpoint. */
+  memberCount?: number
+}
+
+export interface AppSettings {
+  id: number
+  slaCriticalHours: number
+  slaMajorHours: number
+  slaMinorHours: number
   updatedAt: string
 }
 

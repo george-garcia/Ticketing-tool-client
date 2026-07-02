@@ -1,5 +1,5 @@
 import { api } from './baseApi'
-import type { User } from '../types'
+import type { User, UserRole } from '../types'
 
 export const usersApi = api.injectEndpoints({
   endpoints: (builder) => ({
@@ -15,7 +15,17 @@ export const usersApi = api.injectEndpoints({
 
     updateMe: builder.mutation<User, Partial<Pick<User, 'firstName' | 'lastName' | 'pictureUrl'>>>({
       query: (body) => ({ url: '/users/me', method: 'PATCH', body }),
-      invalidatesTags: ['Me'],
+      invalidatesTags: ['Me', { type: 'Users', id: 'LIST' }],
+    }),
+
+    updateUserRole: builder.mutation<User, { id: number; role: UserRole }>({
+      query: ({ id, role }) => ({ url: `/users/${id}/role`, method: 'PATCH', body: { role } }),
+      invalidatesTags: ['Me', { type: 'Users', id: 'LIST' }],
+    }),
+
+    assignUserTeam: builder.mutation<User, { id: number; teamId: number | null }>({
+      query: ({ id, teamId }) => ({ url: `/users/${id}/team`, method: 'PATCH', body: { teamId } }),
+      invalidatesTags: ['Me', { type: 'Users', id: 'LIST' }],
     }),
 
     // Fixed: this was incorrectly declared as a `builder.query` in the old codebase.
@@ -26,5 +36,11 @@ export const usersApi = api.injectEndpoints({
   }),
 })
 
-export const { useGetMeQuery, useGetUsersQuery, useUpdateMeMutation, useDeleteUserMutation } =
-  usersApi
+export const {
+  useGetMeQuery,
+  useGetUsersQuery,
+  useUpdateMeMutation,
+  useUpdateUserRoleMutation,
+  useAssignUserTeamMutation,
+  useDeleteUserMutation,
+} = usersApi

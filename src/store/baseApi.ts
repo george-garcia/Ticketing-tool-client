@@ -35,6 +35,6 @@ const baseQueryWithUnwrap: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
 export const api = createApi({
   reducerPath: 'api',
   baseQuery: baseQueryWithUnwrap,
-  tagTypes: ['Ticket', 'Tickets', 'Users', 'Me'],
+  tagTypes: ['Ticket', 'Tickets', 'Users', 'Me', 'Teams', 'Settings'],
   endpoints: () => ({}),
 })

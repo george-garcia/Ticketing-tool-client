@@ -9,6 +9,8 @@ import TicketsListPage from './features/tickets/TicketsListPage'
 import NewTicketPage from './features/tickets/NewTicketPage'
 import TicketDetailPage from './features/tickets/TicketDetailPage'
 import SearchPage from './features/search/SearchPage'
+import ProfilePage from './features/profile/ProfilePage'
+import AdminPage from './features/admin/AdminPage'
 
 export default function App() {
   return (
@@ -30,6 +32,8 @@ export default function App() {
         <Route path="/tickets/new" element={<NewTicketPage />} />
         <Route path="/tickets/:id" element={<TicketDetailPage />} />
         <Route path="/search" element={<SearchPage />} />
+        <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/admin" element={<AdminPage />} />
       </Route>
 
       <Route path="*" element={<Navigate to="/dashboard" replace />} />

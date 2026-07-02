@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom'
+import { NavLink, Link } from 'react-router-dom'
 import {
   LayoutDashboard,
   Inbox,
@@ -9,6 +9,7 @@ import {
   Clock,
   CheckCircle2,
   Search,
+  Shield,
   type LucideIcon,
 } from 'lucide-react'
 import { Logo } from '../ui/Logo'
@@ -65,9 +66,22 @@ export function Sidebar() {
             {label}
           </NavLink>
         ))}
+        {me?.role === 'admin' && (
+          <NavLink
+            to="/admin"
+            className={({ isActive }) => cn('nav-item', isActive && 'nav-item-active')}
+          >
+            <Shield className="h-4 w-4 shrink-0" />
+            Admin
+          </NavLink>
+        )}
       </nav>
       {me && (
-        <div className="flex items-center gap-3 border-t border-white/10 p-4">
+        <Link
+          to="/profile"
+          className="flex items-center gap-3 border-t border-white/10 p-4 transition hover:bg-white/5"
+          title="Edit your profile"
+        >
           <Avatar name={userName(me)} src={me.pictureUrl} className="h-9 w-9 text-xs" />
           <div className="min-w-0 flex-1">
             <p className="truncate text-sm font-medium text-white">{userName(me)}</p>
@@ -78,7 +92,7 @@ export function Sidebar() {
               {badge.label}
             </span>
           )}
-        </div>
+        </Link>
       )}
     </aside>
   )
