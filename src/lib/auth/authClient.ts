@@ -76,11 +76,13 @@ export const authClient = {
       }
       return
     }
+    // Admin so the one-click demo shows the full app (admin area + settings) even before
+    // the seed runs. On a seeded DB the role comes from the existing profile either way.
     const token = await devLogin({
       email: DEMO.email,
       firstName: 'Demo',
       lastName: 'Recruiter',
-      groups: ['agent'],
+      groups: ['admin'],
     })
     localStorage.setItem(TOKEN_KEY, token)
   },
